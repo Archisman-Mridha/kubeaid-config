@@ -19,7 +19,7 @@ provider:
 aws:
   secretName: capi-cluster-token
   sshKeyName: kubeaid-demo
-  region: eu-west-1
+  region: us-east-2
   bastion:
     enabled: true
   vpc:
@@ -28,14 +28,25 @@ aws:
     cidrBlock: 10.244.0.0/16
   controlPlane:
     loadBalancerType: nlb
-    region: eu-west-1
-    replicas: 3
-    instanceType: t3a.large
+    region: us-east-2
+    replicas: 1
+    instanceType: t2.medium
     ami:
-      id: ami-03cd26c84ae9a587c
-  workerNodes:
-    region: eu-west-1
-    replicas: 2
-    instanceType: t3a.large
-    ami:
-      id: ami-03cd26c84ae9a587c
+      id: ami-05145146e3a9db6f3
+  machinePools:
+    - name: primary
+      replicas: 1
+      region: us-east-2
+      instanceType: t2.medium
+      sshKeyName: kubeaid-demo
+      ami:
+        id: ami-05145146e3a9db6f3
+      labels:
+        workload-type: applications
+        project: kubeaid-demo
+    - name: secondary
+      replicas: 1
+      instanceType: t2.medium
+      sshKeyName: kubeaid-demo
+      ami:
+        id: ami-05145146e3a9db6f3
