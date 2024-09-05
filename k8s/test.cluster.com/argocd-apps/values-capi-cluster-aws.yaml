@@ -44,9 +44,9 @@ aws:
       labels:
         workload-type: applications
         project: kubeaid-demo
-    - name: secondary
-      replicas: 1
-      instanceType: t4g.medium
-      sshKeyName: kubeaid-demo
-      ami:
-        id: ami-0530b5c7c34812744
+    # - name: secondary
+    #   replicas: 1
+    #   instanceType: t4g.medium
+    #   sshKeyName: kubeaid-demo
+    #   ami:
+    #     id: ami-0530b5c7c34812744
