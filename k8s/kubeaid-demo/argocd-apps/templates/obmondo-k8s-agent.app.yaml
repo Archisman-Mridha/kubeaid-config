@@ -4,7 +4,7 @@ metadata:
   name: obmondo-k8s-agent
   namespace: argo-cd
   finalizers:
-	  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 
 spec:
   destination:
@@ -24,5 +24,5 @@ spec:
   syncPolicy:
     automated: {}
     syncOptions:
-			- ApplyOutOfSyncOnly=true
-			- CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
