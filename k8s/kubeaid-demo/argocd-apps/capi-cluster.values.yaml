@@ -33,9 +33,11 @@ aws:
     instanceType: t4g.medium
     ami:
       id: ami-0530b5c7c34812744
-  workerNodes:
-    region: us-east-2
-    replicas: 2
-    instanceType: t4g.medium
-    ami:
-      id: ami-0530b5c7c34812744
+  machinePools:
+    - name: default
+      replicas: 1
+      region: us-east-2
+      instanceType: t4g.medium
+      sshKeyName: kubeaid-demo
+      ami:
+        id: ami-0530b5c7c34812744
