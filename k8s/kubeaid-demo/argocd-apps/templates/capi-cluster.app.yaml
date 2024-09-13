@@ -20,7 +20,6 @@ spec:
       ref: values
   project: default
   syncPolicy:
-    automated: null
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true

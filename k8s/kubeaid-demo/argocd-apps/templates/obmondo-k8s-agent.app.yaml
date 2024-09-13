@@ -22,7 +22,6 @@ spec:
       targetRevision: HEAD
       ref: values
   syncPolicy:
-    automated: {}
     syncOptions:
       - ApplyOutOfSyncOnly=true
       - CreateNamespace=true
