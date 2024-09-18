@@ -42,7 +42,7 @@ aws:
       ami:
         id: ami-0c5bfc0f41ac23871
       labels:
-        workload-type: monitoring
+        node.cluster.x-k8s.io/workload-type: monitoring
       taints:
         - key: workload-type
           value: data-analysis
