@@ -1,0 +1,222 @@
+---
+# Source: capi-cluster/charts/aws/templates/AWSCluster.yaml
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: AWSCluster
+metadata:
+  name: kubeaid-demo
+  labels:
+    cluster.x-k8s.io/name: kubeaid-demo
+spec:
+  region: us-east-2
+  sshKeyName: kubeaid-demo
+  bastion: 
+    enabled: true
+  network:
+    vpc:
+      cidrBlock: 10.14.0.0/22
+    cni:
+      cniIngressRules:
+        - description: Cilium
+          protocol: "tcp"
+          fromPort: 4240
+          toPort: 4240
+        - description: Cilium VXLAN overlay
+          protocol: "udp"
+          fromPort: 8472
+          toPort: 8472
+        - description: Cilium health checks
+          protocol: "icmp"
+          fromPort: 8
+          toPort: 8
+  controlPlaneLoadBalancer:
+    loadBalancerType: nlb
+---
+# Source: capi-cluster/charts/aws/templates/AWSMachinePool.yaml
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: AWSMachinePool
+metadata:
+  name: kubeaid-demo-default
+spec:
+  minSize: 1
+  maxSize: 3
+  awsLaunchTemplate:
+    ami: 
+      id: ami-0b633dfdc16bd31ce
+    iamInstanceProfile: nodes.cluster-api-provider-aws.sigs.k8s.io
+    instanceType: t2g.medium
+    sshKeyName: kubeaid-demo
+    imageLookupBaseOS: ubuntu-20.04
+---
+# Source: capi-cluster/charts/aws/templates/AWSMachineTemplate.yaml
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: AWSMachineTemplate
+metadata:
+  name: kubeaid-demo-control-plane
+spec:
+  template:
+    spec:
+      iamInstanceProfile: control-plane.cluster-api-provider-aws.sigs.k8s.io
+      instanceType: t2g.medium
+      sshKeyName: 
+      imageLookupBaseOS: ubuntu-20.04
+      publicIP: 
+      ami: 
+        id: ami-0b633dfdc16bd31ce
+---
+# Source: capi-cluster/charts/aws/templates/Cluster.yaml
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: kubeaid-demo
+  labels:
+    cluster.x-k8s.io/name: kubeaid-demo
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 10.244.0.0/16
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    kind: KubeadmControlPlane
+    name: kubeaid-demo-control-plane
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+    kind: AWSCluster
+    name: kubeaid-demo
+---
+# Source: capi-cluster/templates/provider-aws.yaml
+apiVersion: operator.cluster.x-k8s.io/v1alpha2
+kind: InfrastructureProvider
+metadata:
+  name: aws-archi
+  namespace: capi-cluster-archi
+spec:
+  configSecret:
+    name: capi-cluster-token
+    namespace: capi-cluster-archi
+  version: v2.6.1
+  fetchConfig:
+    url: https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/v2.6.1/infrastructure-components.yaml
+  manager:
+    metrics:
+      bindAddress: ":8181"
+    syncPeriod: 10m0s
+    featureGates:
+      MachinePool: true
+---
+# Source: capi-cluster/charts/aws/templates/KubeadmConfig.yaml
+apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+kind: KubeadmConfig
+metadata:
+  name: kubeaid-demo-default
+spec:
+  joinConfiguration:
+    nodeRegistration:
+      kubeletExtraArgs:
+        cloud-provider: external
+      name: '{{ ds.meta_data.local_hostname }}'
+      taints:
+        - effect: NoSchedule
+          key: workload-type
+          value: data-analysis
+---
+# Source: capi-cluster/charts/aws/templates/KubeadmControlPlane.yaml
+apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+kind: KubeadmControlPlane
+metadata:
+  name: kubeaid-demo-control-plane
+  annotations:
+    controlplane.cluster.x-k8s.io/skip-kube-proxy: ""
+spec:
+  kubeadmConfigSpec:
+    clusterConfiguration:
+      apiServer:
+        extraArgs:
+          cloud-provider: external
+      controllerManager:
+        extraArgs:
+          cloud-provider: external
+    initConfiguration:
+      skipPhases:
+        - addon/kube-proxy
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: external
+        name: '{{ ds.meta_data.local_hostname }}'
+    joinConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: external
+        name: '{{ ds.meta_data.local_hostname }}'
+    postKubeadmCommands:
+      # Install Helm.
+      - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      # Clone KubeAid.
+      - git clone https://github.com/Archisman-Mridha/kubeaid.git
+      # Copy kubeconfig to ~/.kube/config
+      - mkdir -p $HOME/.kube
+      - sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+      - sudo chown $(id -u):$(id -g) $HOME/.kube/config
+      # Install Cilium.
+      - kubectl create namespace cilium
+      - API_SERVER_URL=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+      - API_SERVER_HOST=$(echo "$API_SERVER_URL" | awk -F[/:] '{print $4}')
+      - API_SERVER_PORT=$(echo "$API_SERVER_URL" | awk -F[/:] '{print $5}')
+      # - MAC=$(curl -s http://169.254.169.254/latest/meta-data/network/interfaces/macs/ | head -n1 | tr -d '/')
+      # - CIDR=$(curl -s http://169.254.169.254/latest/meta-data/network/interfaces/macs/${MAC}/vpc-ipv4-cidr-block/)
+      # - helm template kubeaid/argocd-helm-charts/cilium --values kubeaid/argocd-helm-charts/cilium/values.yaml --set cilium.k8sServiceHost=${API_SERVER_HOST} --set cilium.k8sServicePort=${API_SERVER_PORT} --set cilium.routingMode=native --set cilium.bpf.masquerade=true --set cilium.bpf.datapathMode=netkit --set cilium.autoDirectNodeRoutes=true --set cilium.directRoutingSkipUnreachable=true --set cilium.ipv4NativeRoutingCIDR=${CIDR} --namespace cilium | kubectl apply -f -
+      - helm template kubeaid/argocd-helm-charts/cilium --values kubeaid/argocd-helm-charts/cilium/values.yaml --set cilium.k8sServiceHost=${API_SERVER_HOST} --set cilium.k8sServicePort=${API_SERVER_PORT} --namespace cilium | kubectl apply -f -
+      # Install AWS Cloud Controller Manager.
+      - helm template kubeaid/argocd-helm-charts/ccm-aws --values kubeaid/argocd-helm-charts/ccm-aws/values.yaml --namespace kube-system | kubectl apply -f -
+  machineTemplate:
+    infrastructureRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+      kind: AWSMachineTemplate
+      name: kubeaid-demo-control-plane
+  replicas: 1
+  version: v1.28.0
+---
+# Source: capi-cluster/charts/aws/templates/MachineHealthCheck.yaml
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineHealthCheck
+metadata:
+  name: kubeaid-demo-kcp-unhealthy
+spec:
+  clusterName: kubeaid-demo
+  maxUnhealthy: 100%
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/control-plane: kubeaid-demo-control-plane
+  unhealthyConditions:
+    - type: Ready
+      status: Unknown
+      timeout: 5m0s
+    - type: Ready
+      status: "False"
+      timeout: 5m0s
+---
+# Source: capi-cluster/charts/aws/templates/MachinePool.yaml
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachinePool
+metadata:
+  name: kubeaid-demo-default
+spec:
+  clusterName: kubeaid-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        machine-pool: kubeaid-demo-default
+        workload-type: monitoring
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfig
+          name: kubeaid-demo-default
+      clusterName: kubeaid-demo
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+        kind: AWSMachinePool
+        name: kubeaid-demo-default
+      version: v1.28.0
