@@ -2,7 +2,7 @@ global:
   clusterName: kubeaid-demo
   customerid: archi
   kubernetes:
-    version: v1.28.0
+    version: v1.31.0
   clusterAPI:
     version: v1.8.1
   capa:
@@ -30,17 +30,17 @@ aws:
     loadBalancerType: nlb
     region: us-east-2
     replicas: 1
-    instanceType: t2.medium
+    instanceType: t4g.medium
     ami:
-      id: ami-0b633dfdc16bd31ce
+      id: ami-0c5bfc0f41ac23871
   machinePools:
     - name: default
       replicas: 1
       region: us-east-2
-      instanceType: t2.medium
+      instanceType: t4g.medium
       sshKeyName: kubeaid-demo
       ami:
-        id: ami-0b633dfdc16bd31ce
+        id: ami-0c5bfc0f41ac23871
       labels:
         workload-type: monitoring
       taints:
