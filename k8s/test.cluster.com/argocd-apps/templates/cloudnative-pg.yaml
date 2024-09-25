@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cloudnative-pg
   namespace: argo-cd
 
 spec:
   destination:
-    namespace: cert-manager
+    namespace: cloudnative-pg
     server: https://kubernetes.default.svc
-  project: default
   sources:
     - repoURL: https://github.com/Obmondo/kubeaid.git
-      path: argocd-helm-charts/cert-manager
+      path: argocd-helm-charts/cloudnative-pg
       targetRevision: HEAD
       helm:
         valueFiles:
-          - $values/k8s/test.cluster.com/argocd-apps/values-cert-manager.yaml
+          - $values/k8s/test.cluster.com/argocd-apps/values-cloudnative-pg.yaml
     - repoURL: https://github.com/Archisman-Mridha/kubeaid-config.git
       targetRevision: HEAD
       ref: values
+  project: default
   syncPolicy:
-    automated: {}
+    automated: null
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true

@@ -1,0 +1,57 @@
+keycloakx:
+  image:
+    tag: "25.0.5"
+  command:
+    - "/opt/keycloak/bin/kc.sh"
+    - "--verbose"
+    - "start"
+    - "--http-enabled=true"
+    - "--http-port=8080"
+    - "--hostname-strict=false"
+    - "--spi-events-listener-jboss-logging-success-level=info"
+    - "--spi-events-listener-jboss-logging-error-level=warn"
+  database:
+    vendor: postgres
+    hostname: keycloak-pgsql-rw
+    port: 5432
+    database: keycloak
+  extraEnv: |
+    - name: KC_DB_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-pgsql-app
+          key: username
+    - name: KC_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-pgsql-app
+          key: password
+    - name: KEYCLOAK_ADMIN
+      value: admin
+    - name: KEYCLOAK_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-admin
+          key: KEYCLOAK_PASSWORD
+    - name: JAVA_OPTS_APPEND
+      value: >-
+        -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless    
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 300Mi
+    limits:
+      memory: 1000Mi
+
+  dbchecker:
+    enabled: true
+
+cnpg:
+  instance: 1
+  size: 4Gi
+  recover: false
+  storageClass: default
+
+blackbox:
+  probe: false
