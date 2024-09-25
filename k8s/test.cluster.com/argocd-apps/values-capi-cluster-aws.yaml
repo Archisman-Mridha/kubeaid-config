@@ -35,7 +35,7 @@ aws:
       id: ami-0c5bfc0f41ac23871
   machinePools:
     - name: primary
-      replicas: 1
+      replicas: 2
       region: us-east-2
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
