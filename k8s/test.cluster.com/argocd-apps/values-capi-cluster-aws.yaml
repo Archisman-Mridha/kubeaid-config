@@ -41,3 +41,5 @@ aws:
       sshKeyName: kubeaid-demo
       ami:
         id: ami-0c5bfc0f41ac23871
+      rootVolume:
+        size: 35
