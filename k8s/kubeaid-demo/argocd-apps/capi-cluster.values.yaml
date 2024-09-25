@@ -28,7 +28,6 @@ aws:
     cidrBlock: 10.244.0.0/16
   controlPlane:
     loadBalancerType: nlb
-    region: us-east-2
     replicas: 1
     instanceType: t4g.medium
     ami:
@@ -36,7 +35,6 @@ aws:
   machinePools:
     - name: default
       replicas: 1
-      region: us-east-2
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
       ami:

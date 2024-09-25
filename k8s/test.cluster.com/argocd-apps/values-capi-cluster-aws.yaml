@@ -9,7 +9,7 @@ global:
     version: v2.6.1
     autoScaler: true
   kubeaid:
-    repo: https://github.com/Archisman-Mridha/kubeaid.git
+    repo: https://github.com/Obmondo/kubeaid.git
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config.git
 
@@ -32,7 +32,7 @@ aws:
     replicas: 1
     instanceType: t4g.medium
     ami:
-      id: ami-0530b5c7c34812744
+      id: ami-0c5bfc0f41ac23871
   machinePools:
     - name: primary
       replicas: 1
@@ -40,13 +40,4 @@ aws:
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
       ami:
-        id: ami-0530b5c7c34812744
-      labels:
-        workload-type: applications
-        project: kubeaid-demo
-    # - name: secondary
-    #   replicas: 1
-    #   instanceType: t4g.medium
-    #   sshKeyName: kubeaid-demo
-    #   ami:
-    #     id: ami-0530b5c7c34812744
+        id: ami-0c5bfc0f41ac23871
