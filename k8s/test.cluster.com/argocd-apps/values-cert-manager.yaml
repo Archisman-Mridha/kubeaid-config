@@ -1,6 +1,6 @@
-cert-manager:
-  crds:
-    enabled: true
+# cert-manager:
+#   crds:
+#     enabled: true
 
 issuer:
   enabled: true
