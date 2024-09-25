@@ -4,5 +4,21 @@ aws-ebs-csi-driver:
     revisionHistoryLimit: 0
   node:
     revisionHistoryLimit: 0
+  controller:
+    annotations:
+      nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+          - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane 
   storageClasses:
     - name: default
