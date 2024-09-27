@@ -1,7 +1,3 @@
-# cert-manager:
-#   crds:
-#     enabled: true
-
 issuer:
   enabled: true
   issuerEmail: archismanmridha12345@gmail.com
@@ -15,4 +11,6 @@ issuer:
         - projectsofarchi.xyz
 
 wildcardCertificates:
-  enabled: false
+  enabled: true
+  domains:
+    - "*.projectsofarchi.xyz"
