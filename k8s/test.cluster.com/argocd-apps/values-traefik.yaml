@@ -1,3 +1,7 @@
 traefik:
   deployment:
     revisionHistoryLimit: null
+  tlsStore:
+    default:
+      defaultCertificate:
+        secretName: wildcard-tls
