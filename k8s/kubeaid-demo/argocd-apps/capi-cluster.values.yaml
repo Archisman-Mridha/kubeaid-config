@@ -1,6 +1,5 @@
 global:
   clusterName: kubeaid-demo
-  customerid: archi
   kubernetes:
     version: v1.31.0
   clusterAPI:
@@ -9,7 +8,7 @@ global:
     version: v2.6.1
     autoScaler: true
   kubeaid:
-    repo: https://github.com/Archisman-Mridha/KubeAid
+    repo: https://github.com/Obmondo/KubeAid
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config
 
@@ -27,21 +26,17 @@ aws:
   pods:
     cidrBlock: 10.244.0.0/16
   controlPlane:
-    loadBalancerType: nlb
+    loadBalancer:
+      loadBalancerType: nlb
+    region: us-east-2
     replicas: 1
     instanceType: t4g.medium
     ami:
-      id: ami-0c5bfc0f41ac23871
+      id: ami-00e3b5d0458fc64d4
   machinePools:
-    - name: default
-      replicas: 1
+    - name: primary
+      replicas: 2
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
-      ami:
-        id: ami-0c5bfc0f41ac23871
-      labels:
-        node.cluster.x-k8s.io/workload-type: monitoring
-      taints:
-        - key: workload-type
-          value: data-analysis
-          effect: NoSchedule
+      ami: ami-00e3b5d0458fc64d4
+      rootVolumeSize: 35
