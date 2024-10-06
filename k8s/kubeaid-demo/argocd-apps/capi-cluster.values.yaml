@@ -1,5 +1,6 @@
 global:
   clusterName: kubeaid-demo
+  customerid: archi
   kubernetes:
     version: v1.31.0
   clusterAPI:
