@@ -6,7 +6,7 @@ metadata:
 
 spec:
   destination:
-    namespace: capi-cluster-
+    namespace: capi-cluster
     server: https://kubernetes.default.svc
   sources:
     - repoURL: https://github.com/Obmondo/KubeAid
