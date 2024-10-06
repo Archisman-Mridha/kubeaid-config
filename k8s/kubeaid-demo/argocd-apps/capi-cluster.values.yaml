@@ -39,5 +39,6 @@ aws:
       replicas: 2
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
-      ami: ami-00e3b5d0458fc64d4
+      ami:
+        id: ami-00e3b5d0458fc64d4
       rootVolumeSize: 35
