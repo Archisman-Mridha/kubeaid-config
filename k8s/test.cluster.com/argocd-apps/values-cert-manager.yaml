@@ -11,6 +11,6 @@ issuer:
         - projectsofarchi.xyz
 
 wildcardCertificates:
-  enabled: false
-  # domains:
-  #   - "*.projectsofarchi.xyz"
+  enabled: true
+  domains:
+    - "*.projectsofarchi.xyz"
