@@ -1,3 +1,5 @@
 prometheus:
-  serviceMonitor:
+  podmonitor:
+    enabled: false
+  servicemonitor:
     enabled: false
