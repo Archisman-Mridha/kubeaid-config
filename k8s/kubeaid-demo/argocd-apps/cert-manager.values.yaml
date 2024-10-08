@@ -1,5 +1,3 @@
-prometheus:
-  podmonitor:
-    enabled: false
-  servicemonitor:
+cert-manager:
+  prometheus:
     enabled: false
