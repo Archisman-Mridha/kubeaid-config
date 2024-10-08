@@ -1,6 +1,5 @@
 global:
   clusterName: kubeaid-demo
-  customerid: archi
   kubernetes:
     version: v1.31.0
   clusterAPI:
@@ -9,7 +8,7 @@ global:
     version: v2.6.1
     autoScaler: true
   kubeaid:
-    repo: https://github.com/Obmondo/KubeAid
+    repo: https://github.com/Obmondo/kubeaid
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config
 
