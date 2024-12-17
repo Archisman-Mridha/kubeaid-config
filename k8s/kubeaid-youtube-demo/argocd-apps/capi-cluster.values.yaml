@@ -6,7 +6,6 @@ global:
     repo: https://github.com/Obmondo/KubeAid
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config
-
 provider:
   aws: true
 
@@ -24,7 +23,7 @@ aws:
     loadBalancer:
       loadBalancerType: nlb
     region: us-east-1
-    replicas: 1
+    replicas: 3
     instanceType: t4g.medium
     ami:
       id: ami-0c4219b11327ef260
