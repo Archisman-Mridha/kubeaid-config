@@ -11,7 +11,7 @@ spec:
     namespace: velero
   project: default
   sources:
-    - repoURL: https://github.com/Obmondo/KubeAid
+    - repoURL: https://github.com/Archisman-Mridha/kubeaid
       path: argocd-helm-charts/velero
       targetRevision: HEAD
       helm:
