@@ -17,3 +17,6 @@ cluster-autoscaler:
   autoDiscovery:
     clusterName: kubeaid-demo-hetzner
     namespace: capi-cluster
+
+enableClusterAPIScaleFromZeroSupport:
+  aws: true
