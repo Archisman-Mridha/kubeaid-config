@@ -1,0 +1,17 @@
+global:
+  clusterName: kubeaid-demo-hetzner
+  kubernetes:
+    version: v1.31.0
+  kubeaid:
+    repo: https://github.com/Archisman-Mridha/kubeaid
+  kubeaidConfig:
+    repo: https://github.com/Archisman-Mridha/kubeaid-config
+provider:
+  hetzner: true
+
+hetzner:
+  hcloud:
+    sshKeyName: cluster
+    enabled: true
+    controlPlane: {{true fsn1} [fsn1] cax11 3}
+    nodeGroups: [{{bootstrapper 1 3 map[node-role.kubernetes.io/bootstrapper: node.cluster.x-k8s.io/nodegroup:bootstrapper] []} cax11 [{cluster}]}]
