@@ -1,0 +1,33 @@
+global:
+  clusterName: kubeaid-demo-hetzner
+  kubernetes:
+    version: v1.31.0
+  kubeaid:
+    repo: https://github.com/Archisman-Mridha/kubeaid
+  kubeaidConfig:
+    repo: https://github.com/Archisman-Mridha/kubeaid-config
+provider:
+  hetzner: true
+
+hetzner:
+  hcloud: 
+    sshKeyName: cluster
+    enabled: true
+    controlPlane:
+        loadBalancer:
+            enabled: true
+            region: fsn1
+        regions:
+            - fsn1
+        machineType: cax11
+        replicas: 3
+    nodeGroups:
+        - nodegroup:
+            name: ""
+            minSize: 0
+            maxSize: 0
+            labels: {}
+            taints: []
+          machineType: cax11
+          sshKeys:
+            - name: cluster
