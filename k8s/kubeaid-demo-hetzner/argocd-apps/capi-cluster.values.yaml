@@ -1,0 +1,14 @@
+global:
+  clusterName: kubeaid-demo-hetzner
+  kubernetes:
+    version: v1.31.0
+  kubeaid:
+    repo: https://github.com/Archisman-Mridha/kubeaid
+  kubeaidConfig:
+    repo: https://github.com/Archisman-Mridha/kubeaid-config
+provider:
+  hetzner: true
+
+hetzner:
+  hcloud:
+    '{"SSHKeyName":"cluster","Enabled":true,"ControlPlane":{"LoadBalancer":{"Enabled":true,"Region":"fsn1"},"Regions":["fsn1"],"MachineType":"cax11","Replicas":3},"NodeGroups":[{"Name":"bootstrapper","MinSize":1,"Maxsize":3,"Labels":{"node-role.kubernetes.io/bootstrapper":"","node.cluster.x-k8s.io/nodegroup":"bootstrapper"},"Taints":[],"MachineType":"cax11","SSHKeys":[{"Name":"cluster"}]}]}'
