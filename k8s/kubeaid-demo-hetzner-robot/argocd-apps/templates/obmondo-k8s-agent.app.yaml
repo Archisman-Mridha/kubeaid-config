@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: obmondo-k8s-agent
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: obmondo
+  project: default
+  sources:
+    - repoURL: https://github.com/Archisman-Mridha/kubeaid
+      path: argocd-helm-charts/obmondo-k8s-agent
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - $values/k8s/kubeaid-demo-hetzner-robot/argocd-apps/obmondo-k8s-agent.values.yaml
+    - repoURL: https://github.com/Archisman-Mridha/kubeaid-config
+      targetRevision: HEAD
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
