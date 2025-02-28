@@ -1,23 +1,18 @@
 global:
   clusterName: kubeaid-demo-aws
   kubernetes:
-    version: v1.31.0
+    version: v1.32.0
   kubeaid:
     repo: https://github.com/Archisman-Mridha/kubeaid
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config
-  additionalUsers: 
+  additionalUsers:
     - name: archi
-      sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCMB0BJ1vL53/xiDCfswJWOrBYc39MbnmMnAK9ATohDqgT1ZrvLODbw5T1NTOLsVyuWNXMB9HfPPXg3Qm5L5UXoIj5JeyIY1ArUxjdW5LI4fsYgYHfRSv3gSZFpuJj12+myBxdoNYCDNDrzYF5T3D2is0lqcSG+3UerkY7ox8WuHMSO69bUAn72ugw01TgycdXpX5jvGLb84yl2Xct1/YFsh9UKhVYWx8qdz5r7FM4h5KDIIi2yjAEjwm4DfYKT/9dlzTodzeim4Z755AGXpFWjlQYaV8vNLHhIkDEtDOZTDtePFwQ64cw1e8cYzuRqDRxCVA9mWQtWwbMgklAv5h0ZTu8cJ9XcomQV9W2NCieBJyu+bj71AKFg3qTD9aMBq2zBXshoZwvmPlrIfAreALPEcPQvn6T8vHGvfk6Pf91B7I1Tu9ds0X0Vp5KELR6wwZQx2JKwMJillzC4Z3GY4/oi5J5C6WnlB3TxCvsivBo3TtEc3phylnfHNvRbwCqch2k= robot-webservice-app-user
+      sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCMB0BJ1vL53/xiDCfswJWOrBYc39MbnmMnAK9ATohDqgT1ZrvLODbw5T1NTOLsVyuWNXMB9HfPPXg3Qm5L5UXoIj5JeyIY1ArUxjdW5LI4fsYgYHfRSv3gSZFpuJj12+myBxdoNYCDNDrzYF5T3D2is0lqcSG+3UerkY7ox8WuHMSO69bUAn72ugw01TgycdXpX5jvGLb84yl2Xct1/YFsh9UKhVYWx8qdz5r7FM4h5KDIIi2yjAEjwm4DfYKT/9dlzTodzeim4Z755AGXpFWjlQYaV8vNLHhIkDEtDOZTDtePFwQ64cw1e8cYzuRqDRxCVA9mWQtWwbMgklAv5h0ZTu8cJ9XcomQV9W2NCieBJyu+bj71AKFg3qTD9aMBq2zBXshoZwvmPlrIfAreALPEcPQvn6T8vHGvfk6Pf91B7I1Tu9ds0X0Vp5KELR6wwZQx2JKwMJillzC4Z3GY4/oi5J5C6WnlB3TxCvsivBo3TtEc3phylnfHNvRbwCqch2k=
+        robot-webservice-app-user
 provider:
   aws: true
-
 aws:
-  # Currently, hostNetworking must be set to true.
-  # Otherwise, during the Kubernetes version upgrade process, when the control-plane nodes get
-  # restarted, AWS CAPA errors out, complaining that :
-  #
-  #     NoCredentialProviders: no valid providers in chain. Deprecated.
   useHostNetwork: true
   secretName: cloud-credentials
   sshKeyName: kubeaid-demo
@@ -35,15 +30,15 @@ aws:
     replicas: 3
     instanceType: t4g.medium
     ami:
-      id: ami-0c4219b11327ef260
+      id: ami-042e8a22a289729b1
     apiServer:
-      extraArgs: 
-        audit-log-maxage: "10"
-        audit-log-maxbackup: "1"
-        audit-log-maxsize: "100"
+      extraArgs:
+        audit-log-maxage: '10'
+        audit-log-maxbackup: '1'
+        audit-log-maxsize: '100'
         audit-log-path: /var/log/kube-apiserver-audit.logs
         audit-policy-file: /srv/kubernetes/audit.yaml
-      extraVolumes: 
+      extraVolumes:
         - name: audit-policy-file
           hostPath: /srv/kubernetes/audit.yaml
           mountPath: /srv/kubernetes/audit.yaml
@@ -53,36 +48,30 @@ aws:
           hostPath: /var/log/kube-apiserver-audit.logs
           mountPath: /var/log/kube-apiserver-audit.logs
           pathType: FileOrCreate
-      files: 
+      files:
         - path: /srv/kubernetes/audit.yaml
-          content: |
-            apiVersion: audit.k8s.io/v1
-            kind: Policy
-            # Don't generate audit events for all requests in the RequestReceived stage.
-            omitStages:
-              - "RequestReceived"
-            rules:
-              # Log events with metadata (requesting user, timestamp, resource, verb, etc.) but not request or
-              # response body.
-              - level: Metadata
-                # Long-running requests like watches that fall under this rule will not generate an audit event
-                # in RequestReceived stage. We will omit those logs.
-                omitStages:
-                  - "RequestReceived"
-  nodeGroups: 
+          content: "apiVersion: audit.k8s.io/v1\nkind: Policy\n# Don't generate audit\
+            \ events for all requests in the RequestReceived stage.\nomitStages:\n\
+            \  - \"RequestReceived\"\nrules:\n  # Log events with metadata (requesting\
+            \ user, timestamp, resource, verb, etc.) but not request or\n  # response\
+            \ body.\n  - level: Metadata\n    # Long-running requests like watches\
+            \ that fall under this rule will not generate an audit event\n    # in\
+            \ RequestReceived stage. We will omit those logs.\n    omitStages:\n \
+            \     - \"RequestReceived\"\n"
+  nodeGroups:
     - name: primary
       minSize: 1
       maxSize: 3
       cpu: 2
       memory: 4096
       labels:
-        node-role.kubernetes.io/bootstrapper: ""
+        node-role.kubernetes.io/bootstrapper: ''
         node.cluster.x-k8s.io/nodegroup: bootstrapper
       taints: []
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
       ami:
-        id: ami-0c4219b11327ef260
+        id: ami-042e8a22a289729b1
       rootVolumeSize: 35
     - name: secondary
       minSize: 0
@@ -90,11 +79,11 @@ aws:
       cpu: 2
       memory: 4096
       labels:
-        node-role.kubernetes.io/scale-to-zero-test-subject: ""
+        node-role.kubernetes.io/scale-to-zero-test-subject: ''
         node.cluster.x-k8s.io/nodegroup: scale-to-zero-test-subject
       taints: []
       instanceType: t4g.medium
       sshKeyName: kubeaid-demo
       ami:
-        id: ami-0c4219b11327ef260
+        id: ami-042e8a22a289729b1
       rootVolumeSize: 35
