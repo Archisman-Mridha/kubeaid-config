@@ -14,7 +14,7 @@ spec:
       targetRevision: HEAD
       helm:
         valueFiles:
-          - $values/k8s/kcm/argocd-apps/values-argocd.yaml
+          - $values/k8s/kcm/argocd-apps/values-harbor.yaml
     - repoURL: https://github.com/Archisman-Mridha/kubeaid-config
       targetRevision: HEAD
       ref: values
