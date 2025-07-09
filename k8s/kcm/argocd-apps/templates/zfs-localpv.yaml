@@ -16,7 +16,7 @@ spec:
         valueFiles:
           - $values/k8s/kcm/argocd-apps/values-zfs-localpv.yaml
     - repoURL: https://github.com/Archisman-Mridha/kubeaid-config
-      targetRevision: HEAD
+      targetRevision: change-localpv-to-local-zfs
       ref: values
   project: default
   syncPolicy:
