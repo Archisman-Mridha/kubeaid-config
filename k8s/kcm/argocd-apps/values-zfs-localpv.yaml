@@ -21,6 +21,7 @@ zfs-localpv:
 
 storageClass:
   enabled: true
+  poolName: default
   zfs-localpv:
     poolName: default
     dedup: "off"
