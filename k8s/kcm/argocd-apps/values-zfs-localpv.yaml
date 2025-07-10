@@ -21,12 +21,12 @@ zfs-localpv:
 
 storageClass:
   enabled: true
-  poolName: default
+  poolName: mypool
   zfs-localpv:
-    poolName: default
+    poolName: mypool
     dedup: "off"
   openebs-zfspv-shared:
-    poolName: default
+    poolName: mypool
     shared: "yes"
     thinprovision: "no"
     allowVolumeExpansion: true
