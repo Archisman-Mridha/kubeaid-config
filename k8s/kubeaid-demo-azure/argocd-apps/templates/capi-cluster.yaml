@@ -2,9 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    kubeaid.io/version: "HEAD"
-    kubeaid.io/managed-by: "kubeaid"
-    kubeaid.io/priority: "default"
+    kubeaid.io/version: HEAD
+    kubeaid.io/managed-by: kubeaid
+    kubeaid.io/sync-order: "10"
   name: capi-cluster
   namespace: argocd
 spec:
@@ -31,8 +31,3 @@ spec:
       kind: MachineDeployment
       jsonPointers:
         - /spec/replicas
-    
-    - group: infrastructure.cluster.x-k8s.io
-      kind: HetznerCluster
-      jsonPointers:
-        - /spec/controlPlaneEndpoint/host
