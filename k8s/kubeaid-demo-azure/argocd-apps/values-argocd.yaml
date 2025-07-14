@@ -1,1 +1,13 @@
----
+argo-cd:
+  server:
+    resources:
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 256Mi
+  repoServer:
+    resources:
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 256Mi
