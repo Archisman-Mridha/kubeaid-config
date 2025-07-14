@@ -1,8 +1,1 @@
 ---
-azure:
-  enable: true
-  compositions:
-    workloadIdentityInfrastructure:
-      enable: true
-    disasterRecoveryInfrastructure:
-      enable: true
