@@ -1,0 +1,10 @@
+apiVersion: azure.kubeaid.org/v1alpha1
+kind: DisasterRecoveryInfrastructure
+metadata:
+  name: default
+  namespace: crossplane
+spec:
+  clusterName: kubeaid-demo-azure
+  subscriptionID: c4508db5-f783-4ac1-9221-1116c3a6db47
+  location: northcentralus
+  storageAccountName: kubeaiddemo
