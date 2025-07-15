@@ -8,3 +8,6 @@ spec:
   subscriptionID: c4508db5-f783-4ac1-9221-1116c3a6db47
   location: northcentralus
   storageAccountName: kubeaiddemo
+
+  writeConnectionSecretToRef:
+    name: default-disaster-recovery-infrastructure-details

@@ -9,3 +9,6 @@ spec:
   location: northcentralus
   aadApplicationPrincipalID: 2d2d0f78-0f01-4dba-9df8-81577b023053
   storageAccountName: kubeaiddemo
+
+  writeConnectionSecretToRef:
+    name: default-workload-identity-infrastructure-details
