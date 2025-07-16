@@ -17,6 +17,7 @@ controlPlane:
   hosts:
     - sshPort: 22
       sshUsername: root
+      sshPrivateKeyFile: ./outputs/ssh/rsa/openssh/.key
       publicAddress: 94.130.181.203
 
 clusterNetwork:
@@ -37,6 +38,7 @@ staticWorkers:
   hosts:
     - sshPort: 22
       sshUsername: root
+      sshPrivateKeyFile: ./outputs/ssh/rsa/openssh/.key
       publicAddress: 195.201.219.9
 
       labels: 
