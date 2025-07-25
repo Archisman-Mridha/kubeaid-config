@@ -1,7 +1,7 @@
 global:
   clusterName: kubeaid-demo-azure
   kubernetes:
-    version: v1.31.1
+    version: v1.32.0
   kubeaid:
     repo: https://github.com/Archisman-Mridha/kubeaid
   kubeaidConfig:
@@ -22,7 +22,7 @@ azure:
 
   userAssignedIdentity:
     name: capi
-    clientID: e05a7adc-3f92-4395-be89-36d800c421c4
+    clientID: 
 
   serviceAccountIssuer:
     url: https://kubeaiddemo.blob.core.windows.net/oidc-provider
