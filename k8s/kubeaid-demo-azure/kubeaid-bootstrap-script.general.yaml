@@ -1,94 +1,35 @@
 forkURLs:
-  # KubeAid repository URL (in HTTPs syntax).
-  # Defaults to Obmondo's KubeAid repository.
-  kubeaid: https://github.com/Archisman-Mridha/KubeAid
-
-  # Your KubeAid config repository URL (in HTTPs syntax).
+  kubeaid: https://github.com/Archisman-Mridha/kubeaid
   kubeaidConfig: https://github.com/Archisman-Mridha/kubeaid-config
 
-# Kubernetes cluster and control-plane specific configurations.
 cluster:
-  # Kubernetes cluster name.
   name: kubeaid-demo-azure
-
-  # Kubernetes version to use.
-  # NOTE : Make sure that the AMI you're using, is targetted towards this Kubernetes version.
-  k8sVersion: v1.31.0
-
-  # Kubeaid version to use.
+  k8sVersion: v1.32.0
   kubeaidVersion: HEAD
-
-  # Kubernetes API server specific configurations.
-  # REFER : https://github.com/kubernetes-sigs/cluster-api/blob/main/controlplane/kubeadm/config/crd/bases/controlplane.cluster.x-k8s.io_kubeadmcontrolplanes.yaml.
-  #
-  # NOTE : Generally, refer to the KubeadmControlPlane CRD instead of the corresponding GoLang
-  #        source types linked below.
-  #        There are some configuration options which appear in the corresponding GoLang source type,
-  #        but not in the CRD. If you set those fields, then they get removed by the Kubeadm
-  #        control-plane provider. This causes the capi-cluster ArgoCD App to always be in an
-  #        OutOfSync state, resulting to the KubeAid Bootstrap Script not making any progress!
-  # apiServer:
-  #
-  #   extraArgs: {}
-  #
-  #   # REFER : "sigs.k8s.io/cluster-api/bootstrap/kubeadm/api/v1beta1".HostPathMount
-  #   #
-  #   # NOTE : If you want a mount to be read-only, then set extraVolume.readOnly to true.
-  #   #        Otherwise, omit setting that field. It gets removed by the Kubeadm control-plane
-  #   #        provider component, which results to the capi-cluster ArgoCD App always being in
-  #   #        OutOfSync state.
-  #   extraVolumes: []
-  #
-  #   # REFER : "sigs.k8s.io/cluster-api/bootstrap/kubeadm/api/v1beta1".File
-  #   files: []
-
-  # Uncomment, if you just want audit-logging to work out of the box! KubeAid Bootstrap Script will
-  # set necessary configuration options in cluster.apiServer.
-  # enableAuditLogging: True
-
-  # Any additional users you want to be setup for each Kubernetes node.
-  # additionalUsers:
-  #  - name: <username>
-  #    sshPublicKey: xxxxxxxxxx
+  enableAuditLogging: true
+  additionalUsers:
+    - name: archi
+      sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCMB0BJ1vL53/xiDCfswJWOrBYc39MbnmMnAK9ATohDqgT1ZrvLODbw5T1NTOLsVyuWNXMB9HfPPXg3Qm5L5UXoIj5JeyIY1ArUxjdW5LI4fsYgYHfRSv3gSZFpuJj12+myBxdoNYCDNDrzYF5T3D2is0lqcSG+3UerkY7ox8WuHMSO69bUAn72ugw01TgycdXpX5jvGLb84yl2Xct1/YFsh9UKhVYWx8qdz5r7FM4h5KDIIi2yjAEjwm4DfYKT/9dlzTodzeim4Z755AGXpFWjlQYaV8vNLHhIkDEtDOZTDtePFwQ64cw1e8cYzuRqDRxCVA9mWQtWwbMgklAv5h0ZTu8cJ9XcomQV9W2NCieBJyu+bj71AKFg3qTD9aMBq2zBXshoZwvmPlrIfAreALPEcPQvn6T8vHGvfk6Pf91B7I1Tu9ds0X0Vp5KELR6wwZQx2JKwMJillzC4Z3GY4/oi5J5C6WnlB3TxCvsivBo3TtEc3phylnfHNvRbwCqch2k= robot-webservice-app-user
 
 cloud:
-  # Azure specific configurations.
   azure:
     tenantID: 044f8a56-5941-491f-9618-310d92b5a3dd
     subscriptionID: c4508db5-f783-4ac1-9221-1116c3a6db47
-
     aadApplication:
-      # Object ID of the Service Principal corresponding to the AAD application you created,
-      # while following the pre-requisites section in the provider guide.
       principalID: 2d2d0f78-0f01-4dba-9df8-81577b023053
-
     location: northcentralus
 
-    # Storage account name.
-    # It must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-    #
-    # KubeAid Bootstrap Script will create it, (if it doesn't already exist).
-    #
-    # For now, the same storage account is used to :
-    #
-    #   (1) host the OIDC provider which issues AAD tokens to pods in exchange of ServiceAccount
-    #       tokens.
-    #
-    #   (2) store backups.
+    # Storage account name must be between 3 and 24 characters in length and use numbers and
+    # lower-case letters only.
     storageAccount: kubeaiddemo
 
     workloadIdentity:
-      # Details about the PEM type SSH KeyPair, to be used for Workload Identity setup.
       openIDProviderSSHKeyPair:
         publicKeyFilePath: ./outputs/ssh/rsa/pem/.pub
         privateKeyFilePath: ./outputs/ssh/rsa/pem/.key
 
-    # Public key of the RSA type SSH keypair, that'll be added to each VM.
     sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCMB0BJ1vL53/xiDCfswJWOrBYc39MbnmMnAK9ATohDqgT1ZrvLODbw5T1NTOLsVyuWNXMB9HfPPXg3Qm5L5UXoIj5JeyIY1ArUxjdW5LI4fsYgYHfRSv3gSZFpuJj12+myBxdoNYCDNDrzYF5T3D2is0lqcSG+3UerkY7ox8WuHMSO69bUAn72ugw01TgycdXpX5jvGLb84yl2Xct1/YFsh9UKhVYWx8qdz5r7FM4h5KDIIi2yjAEjwm4DfYKT/9dlzTodzeim4Z755AGXpFWjlQYaV8vNLHhIkDEtDOZTDtePFwQ64cw1e8cYzuRqDRxCVA9mWQtWwbMgklAv5h0ZTu8cJ9XcomQV9W2NCieBJyu+bj71AKFg3qTD9aMBq2zBXshoZwvmPlrIfAreALPEcPQvn6T8vHGvfk6Pf91B7I1Tu9ds0X0Vp5KELR6wwZQx2JKwMJillzC4Z3GY4/oi5J5C6WnlB3TxCvsivBo3TtEc3phylnfHNvRbwCqch2k= robot-webservice-app-user
 
-    # Details about the machine image that'll be used for each VM.
-    #
-    # NOTE : We only support Ubuntu OS.
     canonicalUbuntuImage:
       sku: server-arm64
       offer: ubuntu-24_04-lts
@@ -121,13 +62,7 @@ cloud:
 
         taints: []
 
-  # A bucket corresponds to a Blob Container in the Azure Storage Account.
-  #
-  # KubeAid Bootstrap Script will create the corresponding Blob Container , if it doesn't already
-  # exist.
   disasterRecovery:
     veleroBackupsBucketName: velero-backups
     sealedSecretsBackupsBucketName: sealed-secrets-backups
-# monitoring:
-#   kubePrometheusVersion: v0.14.0
 

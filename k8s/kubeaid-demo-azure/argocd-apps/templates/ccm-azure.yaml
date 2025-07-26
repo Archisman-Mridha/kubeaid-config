@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/KubeAid
+    - repoURL: https://github.com/Archisman-Mridha/kubeaid
       path: argocd-helm-charts/ccm-azure
       targetRevision: HEAD
       helm:
