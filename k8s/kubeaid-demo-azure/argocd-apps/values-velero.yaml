@@ -19,7 +19,7 @@ velero:
       create: true
       name: velero
       annotations:
-        azure.workload.identity/client-id: 1004220e-5ea7-4ab6-8053-d7e1b1ea7d9c
+        azure.workload.identity/client-id: 
   rbac:
     create: true
     clusterAdministrator: true
