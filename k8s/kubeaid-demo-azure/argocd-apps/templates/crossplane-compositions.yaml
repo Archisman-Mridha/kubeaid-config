@@ -12,7 +12,7 @@ spec:
     namespace: crossplane
     server: https://kubernetes.default.svc
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid
+    - repoURL: https://github.com/Archisman-Mridha/KubeAid
       path: argocd-helm-charts/crossplane-compositions
       targetRevision: HEAD
       helm:
