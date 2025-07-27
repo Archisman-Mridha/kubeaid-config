@@ -21,7 +21,7 @@ azure:
 
   userAssignedIdentity:
     name: capi
-    clientID: 
+    clientID: e628092f-3d0f-4155-9848-ad7c7f6180b5
 
   serviceAccountIssuer:
     url: https://kubeaiddemo.blob.core.windows.net/oidc-provider
