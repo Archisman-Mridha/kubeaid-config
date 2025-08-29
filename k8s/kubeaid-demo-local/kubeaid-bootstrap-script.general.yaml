@@ -1,6 +1,3 @@
-# Copyright 2025 Obmondo
-# SPDX-License-Identifier: AGPL3
-
 forkURLs:
   # KubeAid repository URL (in HTTPs syntax).
   # Defaults to Obmondo's KubeAid repository.
