@@ -46,13 +46,13 @@ cloud:
 
     controlPlane:
       endpoint:
-        host: "192.168.29.146"
+        host: "65.109.11.32"
         port: 6443
       hosts:
-        - # publicAddress: "188.245.118.15"
+        - publicAddress: "65.109.11.32"
           #
           # Or you can specify a private IP address.
-          privateAddress: "192.168.29.146"
+          # privateAddress: "65.109.11.32"
 
           # Host level SSH config override.
           # ssh:

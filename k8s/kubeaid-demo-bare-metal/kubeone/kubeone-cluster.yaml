@@ -10,14 +10,14 @@ versions:
   kubernetes: v1.32.0
 
 apiEndpoint: 
-  host: 192.168.29.146
+  host: 65.109.11.32
   port: 6443
 
 controlPlane:
   hosts:
     -
       sshPort: 22
-      privateAddress: 192.168.29.146
+      publicAddress: 65.109.11.32
 
 clusterNetwork:
   podSubnet: "10.244.0.0/16"
@@ -50,5 +50,5 @@ helmReleases:
           operator:
             replicas: 1
           kubeProxyReplacement: "true"
-          k8sServiceHost: 192.168.29.146
+          k8sServiceHost: 65.109.11.32
           k8sServicePort: 6443
