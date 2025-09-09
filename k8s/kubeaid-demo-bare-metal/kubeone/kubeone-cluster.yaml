@@ -49,14 +49,15 @@ helmReleases:
       - inline:
           operator:
             replicas: 1
-            rollOutPods: true priorityClassName: "system-node-critical"
+            rollOutPods: true
+            priorityClassName: system-node-critical
           kubeProxyReplacement: "true"
           k8sServiceHost: 65.109.11.32
           k8sServicePort: 6443
           ipam:
             mode: kubernetes
           rollOutCiliumPods: true
-          priorityClassName: "system-node-critical"
+          priorityClassName: system-node-critical
           hubble:
             metrics:
               enabled:
