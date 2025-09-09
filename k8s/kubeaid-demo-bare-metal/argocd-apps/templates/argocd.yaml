@@ -2,22 +2,22 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    kubeaid.io/version: HEAD
+    kubeaid.io/version: 17.1.0
     kubeaid.io/managed-by: kubeaid
     kubeaid.io/sync-order: "100"
   name: argocd
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - argocd.argoproj.io/resources-finalizer
 spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid
+    - repoURL: https://github.com/Obmondo/KubeAid
       path: argocd-helm-charts/argo-cd
-      targetRevision: HEAD
+      targetRevision: 17.1.0
       helm:
         valueFiles:
           - $values/k8s/kubeaid-demo-bare-metal/argocd-apps/values-argocd.yaml
@@ -28,8 +28,9 @@ spec:
     syncOptions:
       - ApplyOutOfSyncOnly=true
       - CreateNamespace=true
-      - RespectIgnoreDifferences=true # When syncing changes, respect fields ignored by the
-                                      # ignoreDifferences configuration.
+      # When syncing changes, respect fields ignored by the
+      # ignoreDifferences configuration.
+      - RespectIgnoreDifferences=true
   # Will ignore differences between live and desired states during the diff.
   # NOTE : these configurations are not used during the sync process unless the
   #        RespectIgnoreDifferences=true sync option is enabled.

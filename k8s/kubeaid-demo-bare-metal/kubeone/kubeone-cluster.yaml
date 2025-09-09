@@ -7,18 +7,17 @@ cloudProvider:
   none: {}
 
 versions:
-  kubernetes: v1.31.0
+  kubernetes: v1.32.0
 
 apiEndpoint: 
-  host: 94.130.181.203
+  host: 192.168.29.146
   port: 6443
 
 controlPlane:
   hosts:
-    - sshPort: 22
-      sshUsername: root
-      sshPrivateKeyFile: ./outputs/ssh/rsa/openssh/.key
-      publicAddress: 94.130.181.203
+    -
+      sshPort: 22
+      privateAddress: 192.168.29.146
 
 clusterNetwork:
   podSubnet: "10.244.0.0/16"
@@ -36,16 +35,6 @@ operatingSystemManager:
 
 staticWorkers:
   hosts:
-    - sshPort: 22
-      sshUsername: root
-      sshPrivateKeyFile: ./outputs/ssh/rsa/openssh/.key
-      publicAddress: 195.201.219.9
-
-      labels: 
-        node-role.kubernetes.io/bootstrapper: ""
-        node.cluster.x-k8s.io/nodegroup: bootstrapper
-      taints: 
-        []
 
 dynamicWorkers: []
 
@@ -61,5 +50,5 @@ helmReleases:
           operator:
             replicas: 1
           kubeProxyReplacement: "true"
-          k8sServiceHost: 94.130.181.203
+          k8sServiceHost: 192.168.29.146
           k8sServicePort: 6443
