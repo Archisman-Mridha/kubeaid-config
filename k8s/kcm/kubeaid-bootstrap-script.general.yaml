@@ -43,8 +43,8 @@ cloud:
       # or rescue mode).
       sshKeyPair:
         name: cluster
-        publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
-        privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
+        publicKeyFilePath: ./ssh/.pub
+        privateKeyFilePath: ./ssh/.key
 
     controlPlane:
       # Regions you're using in the eu-central Hetzner network zone.
