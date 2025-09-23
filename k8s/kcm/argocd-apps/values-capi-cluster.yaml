@@ -45,6 +45,8 @@ hetzner:
           wwns:
             - "0x5000cca25ed86494"
             - "0x5000cca25ecf496b"
+      raid:
+        level: 1
 
     
 
