@@ -69,9 +69,6 @@ cloud:
           # Whether you're using a Hetzner Bare-Metal Failover IP or not.
           isFailoverIP: true
 
-        raid:
-          enabled: false
-
         bareMetalHosts:
           - serverID: 1866484
             wwns:
