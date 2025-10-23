@@ -15,7 +15,7 @@ cluster:
   # We're using Kubermatic KubeOne v1.10 under the hood, to initialize the Kubernete cluster.
   # And the supported Kubernetes versions are specified here :
   # https://docs.kubermatic.com/kubeone/v1.10/architecture/compatibility/supported-versions/.
-  k8sVersion: v1.32.0
+  k8sVersion: v1.33.0
 
   # Kubeaid version to use.
   #
@@ -43,8 +43,8 @@ cloud:
       # or rescue mode).
       sshKeyPair:
         name: cluster
-        publicKeyFilePath: ./ssh/.pub
-        privateKeyFilePath: ./ssh/.key
+        publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
+        privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
 
     controlPlane:
       # Regions you're using in the eu-central Hetzner network zone.
@@ -75,16 +75,13 @@ cloud:
               - "0x50014ee2097c6ca4"
               - "0x50014ee2097c9304"
 
-          - serverID: 1866472
-            wwns:
-              - "0x50000397cb700acd"
-              - "0x500003981be00179"
-
-          - serverID: 1866482
-            wwns:
-              - "0x5000cca25ed86494"
-              - "0x5000cca25ecf496b"
-
-        raid:
-          level: 0
+          # - serverID: 1866472
+          #   wwns:
+          #     - "0x50000397cb700acd"
+          #     - "0x500003981be00179"
+          #
+          # - serverID: 1866482
+          #   wwns:
+          #     - "0x5000cca25ed86494"
+          #     - "0x5000cca25ecf496b"
 
