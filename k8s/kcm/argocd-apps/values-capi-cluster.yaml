@@ -33,10 +33,10 @@ hetzner:
         isFailoverIP: true
         host: 65.108.24.157
       bareMetalHosts:
-        - serverID: "1866472"
+        - serverID: "1866484"
           wwns:
-            - "0x50000397cb700acd"
-            - "0x500003981be00179"
+            - "0x50014ee2097c6ca4"
+            - "0x50014ee2097c9304"
 
     
 
