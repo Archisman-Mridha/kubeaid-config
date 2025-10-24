@@ -23,4 +23,4 @@ rook-ceph-cluster:
 
   cephClusterSpec:
     storage:
-      deviceFilter: "^sd[ab]7$"
+      deviceFilter: "^sd[ab]4$"
