@@ -6,7 +6,7 @@ global:
     repo: https://github.com/Archisman-Mridha/kubeaid
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config
-  additionalUsers: 
+  additionalUsers:
     - name: archi
       sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6dc7jP7zQT7qSKkFJd4pOMZmTb0kx8R29A3DbzLaDSSepEGtJ+64taQ4YI1C5/l7BFdi8blb1N135tRf54YY1v1plFDzukjxMx8GLa965T4YuSPg/1PhNQfsUcGDL/LXMktJiJP8pYvQKnOjM6KHju1GJKPlmlWHkttyFk6KmkeltF+ljPRGJhpOUjvM9RJgsYqiy6+pb8hGKxQi4dQ07duj7y7N/0pPbHg/BrtpbtHm2r/fsrFfzVwqIRg61LKxrcTZ4HPGpKPoare+X+wbp85hQOfWr6KtG9cQMjGbneZTYAYXhQxYlr2XlbGq/yj9mQJxYg/rEIL/EQY12An4zdI2hqpNlgkZwioc2agCGs3HvtQY64gpSF/M530Wx6Dm2e9eltSj+frr+WJdz3QXqO84dUENllFavL+gSGuT+MBzYOCsCAlKzKEj1EZ4ivkpYaNvTNrVqFpNMPsvuX3nAjlcl3g2Wmkb+hjPjTH84glNEvFsc2FYLSaU46jyb6UJ3aSUaJsCBIQfp4C6BVAYwEe9OzvuJrp8Ky4P5C0t0UvJgfdbUIh5TksTZ5QpyQiMvzpvmhJEWY+BEHHiI2a2ZRs8DPr9NZ0M6aut0AfxdM3YxIRcNU1m8lJc37/QgQETuzKCnQzZwsJF/HdVuXv+VW39kstpvRO/o5ORGaCg/SQ== cardno:13_819_971
 provider:
@@ -22,21 +22,20 @@ hetzner:
       imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
 
   controlPlane:
-    regions: 
+    regions:
       - fsn1
       - nbg1
       - hel1
 
-    
-    bareMetal: 
+    bareMetal:
       endpoint:
         isFailoverIP: true
         host: 65.108.24.157
       bareMetalHosts:
         - serverID: "1866472"
           wwns:
-            - "0x50000397cb700acd"
-            - "0x500003981be00179"
+            - "0x50014ee0ae6cabbb"
+            - "0x50014ee6b080c608"
         - serverID: "1866482"
           wwns:
             - "0x5000cca25ed86494"
@@ -46,8 +45,6 @@ hetzner:
             - "0x50014ee2097c6ca4"
             - "0x50014ee2097c9304"
 
-    
-
-  nodeGroups: 
+  nodeGroups:
     hcloud: []
     bareMetal: []
