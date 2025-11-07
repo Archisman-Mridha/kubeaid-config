@@ -21,4 +21,4 @@ zfs-localpv:
 
 storageClass:
   enabled: true
-  poolName: zfspv-pool
+  poolName: primary
