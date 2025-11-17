@@ -19,43 +19,13 @@ hetzner:
     imageName: ubuntu-24.04
     sshKeyPairName: kubeaid-cli-test
   bareMetal:
-    wipeDisks: true
+    wipeDisks: false
     sshKeyPair:
       name: kubeaid-cli-test
     installImage:
       imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
-    diskSetupCommands: |
+    diskLayoutSetupCommands: |
       
-      apt-get update -y
-      apt install zfsutils-linux -y
-      
-      # In each NVMe disk, create a partition which'll take up the remaining storage space.
-      echo ",,83" | sfdisk -N 4 /dev/nvme0n1 --force
-      partprobe /dev/nvme0n1
-      echo ",,83" | sfdisk -N 4 /dev/nvme1n1 --force
-      partprobe /dev/nvme1n1
-      
-      # Create a mirrored ZPool out of those 2 partitions.
-      zpool create primary mirror /dev/nvme0n1p4 /dev/nvme1n1p4
-      
-      # From that ZPool, set aside 50GB for ContainerD, by creating a ZVolume.
-      #
-      # A ZFS volume is a dataset that represents a block device. ZFS volumes are identified as
-      # devices in the /dev/zvol/{dsk,rdsk}/pool directory.
-      zfs create -V 50G primary/containerd
-      udevadm settle
-      mkfs.ext4 /dev/zvol/primary/containerd
-      mkdir -p /var/lib/containerd
-      echo "/dev/zvol/primary/containerd /var/lib/containerd ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-      mount /dev/zvol/primary/containerd /var/lib/containerd
-      
-      # From that ZPool, set aside 50GB for ephemeral volumes for pods, by creating a ZVolume.
-      zfs create -V 50G primary/pod-ephemeral-volumes
-      udevadm settle
-      mkfs.ext4 /dev/zvol/primary/pod-ephemeral-volumes
-      mkdir -p /var/lib/kubelet/pods
-      echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-      mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
       
 
   controlPlane:
@@ -93,4 +63,4 @@ hetzner:
             wwns:
               - eui.000000000000000100a075255218338c
               - eui.000000000000000100a07525521833ce
-        diskSetupCommands: ""
+        diskLayoutSetupCommands: ""

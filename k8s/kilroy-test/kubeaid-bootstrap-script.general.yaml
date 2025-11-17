@@ -22,7 +22,6 @@ cloud:
       sshKeyPairName: kubeaid-cli-test
 
     bareMetal:
-      wipeDisks: true
       sshKeyPair:
         name: kubeaid-cli-test
         publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
