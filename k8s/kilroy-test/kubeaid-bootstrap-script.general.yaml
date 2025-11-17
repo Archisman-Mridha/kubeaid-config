@@ -33,9 +33,9 @@ cloud:
 
         # In each NVMe disk, create a partition which'll take up the remaining storage space.
         echo ",,83" | sfdisk -N 4 /dev/nvme0n1 --force
-        partprobe /dev/sda
+        partprobe /dev/nvme0n1
         echo ",,83" | sfdisk -N 4 /dev/nvme1n1 --force
-        partprobe /dev/sdb
+        partprobe /dev/nvme1n1
 
         # Create a mirrored ZPool out of those 2 partitions.
         zpool create primary mirror /dev/nvme0n1p4 /dev/nvme1n1p4
