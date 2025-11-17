@@ -24,7 +24,8 @@ hetzner:
       name: kubeaid-cli-test
     installImage:
       imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
-    diskSetupCommands: apt-get update -y
+    diskSetupCommands: |
+      apt-get update -y
 apt install zfsutils-linux -y
 
 # In each NVMe disk, create a partition which'll take up the remaining storage space.
