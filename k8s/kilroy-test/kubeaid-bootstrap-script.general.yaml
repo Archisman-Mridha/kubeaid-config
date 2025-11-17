@@ -26,7 +26,7 @@ cloud:
         name: kubeaid-cli-test
         publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
         privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
-      diskSetupCommands: |
+      diskLayoutSetupCommands: |
         apt-get update -y
         apt install zfsutils-linux -y
 
