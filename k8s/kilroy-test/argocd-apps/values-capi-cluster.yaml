@@ -19,7 +19,7 @@ hetzner:
     imageName: ubuntu-24.04
     sshKeyPairName: kubeaid-cli-test
   bareMetal:
-    wipeDisks: false
+    wipeDisks: true
     sshKeyPair:
       name: kubeaid-cli-test
     installImage:
@@ -36,27 +36,31 @@ hetzner:
       partprobe /dev/nvme1n1
       udevadm settle
       
-      # Create a mirrored ZPool out of those 2 partitions.
-      zpool create primary mirror /dev/nvme0n1p4 /dev/nvme1n1p4
+      if zpool import -f primary >/dev/null 2>&1; then
+        echo "Imported existing primary ZPool"
+      else
+        # Create a mirrored ZPool out of those 2 partitions.
+        zpool create primary mirror /dev/nvme0n1p4 /dev/nvme1n1p4
       
-      # From that ZPool, set aside 50GB for ContainerD, by creating a ZVolume.
-      #
-      # A ZFS volume is a dataset that represents a block device. ZFS volumes are identified as
-      # devices in the /dev/zvol/{dsk,rdsk}/pool directory.
-      zfs create -V 50G primary/containerd
-      udevadm settle
-      mkfs.ext4 /dev/zvol/primary/containerd
-      mkdir -p /var/lib/containerd
-      echo "/dev/zvol/primary/containerd /var/lib/containerd ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-      mount /dev/zvol/primary/containerd /var/lib/containerd
+        # From that ZPool, set aside 50GB for ContainerD, by creating a ZVolume.
+        #
+        # A ZFS volume is a dataset that represents a block device. ZFS volumes are identified as
+        # devices in the /dev/zvol/{dsk,rdsk}/pool directory.
+        zfs create -V 50G primary/containerd
+        udevadm settle
+        mkfs.ext4 /dev/zvol/primary/containerd
+        mkdir -p /var/lib/containerd
+        echo "/dev/zvol/primary/containerd /var/lib/containerd ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/containerd /var/lib/containerd
       
-      # From that ZPool, set aside 50GB for ephemeral volumes for pods, by creating a ZVolume.
-      zfs create -V 50G primary/pod-ephemeral-volumes
-      udevadm settle
-      mkfs.ext4 /dev/zvol/primary/pod-ephemeral-volumes
-      mkdir -p /var/lib/kubelet/pods
-      echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-      mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
+        # From that ZPool, set aside 50GB for ephemeral volumes for pods, by creating a ZVolume.
+        zfs create -V 50G primary/pod-ephemeral-volumes
+        udevadm settle
+        mkfs.ext4 /dev/zvol/primary/pod-ephemeral-volumes
+        mkdir -p /var/lib/kubelet/pods
+        echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
+      fi
       
 
   controlPlane:
