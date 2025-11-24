@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: https://github.com/Archisman-Mridha/kubeaid
       path: argocd-helm-charts/capi-cluster
-      targetRevision: HEAD
+      targetRevision: kcm
       helm:
         valueFiles:
           - $values/k8s/kcm/argocd-apps/values-capi-cluster.yaml
