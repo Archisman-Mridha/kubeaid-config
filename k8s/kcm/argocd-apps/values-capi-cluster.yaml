@@ -75,8 +75,8 @@ hetzner:
       bareMetalHosts:
         - serverID: "1866472"
           wwns:
-            - "0x50000397cb700acd"
-            - "0x500003981be00179"
+            - "0x50014e0ae6cabbb"
+            - "0x50014ee6b080c608"
         - serverID: "1866482"
           wwns:
             - "0x5000cca25ed86494"
