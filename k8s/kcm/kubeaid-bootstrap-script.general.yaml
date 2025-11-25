@@ -71,18 +71,20 @@ cloud:
           zfs create -V 100G primary/containerd
           udevadm settle
           mkfs.ext4 /dev/zvol/primary/containerd
-          mkdir -p /var/lib/containerd
-          echo "/dev/zvol/primary/containerd /var/lib/containerd ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-          mount /dev/zvol/primary/containerd /var/lib/containerd
 
           # From that ZPool, set aside 50GB for ephemeral volumes for pods, by creating a ZVolume.
           zfs create -V 50G primary/pod-ephemeral-volumes
           udevadm settle
           mkfs.ext4 /dev/zvol/primary/pod-ephemeral-volumes
-          mkdir -p /var/lib/kubelet/pods
-          echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-          mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
         fi
+
+        mkdir -p /var/lib/containerd
+        echo "/dev/zvol/primary/containerd /var/lib/containerd ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/containerd /var/lib/containerd
+
+        mkdir -p /var/lib/kubelet/pods
+        echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
 
         # Create partition (without RAID) for Rook Ceph, which will take up the remaining of each HDD.
         echo ",,83" | sfdisk -N 4 /dev/sda --force
