@@ -33,7 +33,7 @@ cloud:
     mode: bare-metal
 
     vswitch:
-      vlanID: "4001"
+      vlanID: 4001
       name: "kcm"
 
     bareMetal:
