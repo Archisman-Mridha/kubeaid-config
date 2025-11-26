@@ -128,15 +128,15 @@ cloud:
           isFailoverIP: true
 
         bareMetalHosts:
-          - serverID: 1866472
+          - serverID: 1866472 # 65.21.232.119
             wwns:
               - "0x50014ee0ae6cabbb"
               - "0x50014ee6b080c608"
-          - serverID: 1866482
+          - serverID: 1866482 # 65.108.70.52
             wwns:
               - "0x5000cca25ed86494"
               - "0x5000cca25ecf496b"
-          - serverID: 1866484
+          - serverID: 1866484 # 65.108.70.176
             wwns:
               - "0x50014ee2097c6ca4"
               - "0x50014ee2097c9304"
