@@ -89,9 +89,9 @@ cloud:
         echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
         mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
 
-        mkdir -p /var/log
-        echo "/dev/zvol/primary/pod-logs /var/log ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-        mount /dev/zvol/primary/pod-logs /var/log
+        mkdir -p /var/log/pods
+        echo "/dev/zvol/primary/pod-logs /var/log/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/pod-logs /var/log/pods
 
         # Enable weekly ZPool trimming for the ZPool.
         # So unused storage space will be reclaimed back, from the ZVolumes into the ZPool.
@@ -228,9 +228,9 @@ cloud:
           echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
           mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
 
-          mkdir -p /var/log
-          echo "/dev/zvol/primary/pod-logs /var/log ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-          mount /dev/zvol/primary/pod-logs /var/log
+          mkdir -p /var/log/pods
+          echo "/dev/zvol/primary/pod-logs /var/log/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+          mount /dev/zvol/primary/pod-logs /var/log/pods
 
           # Enable weekly ZPool trimming for the ZPool.
           # So unused storage space will be reclaimed back, from the ZVolumes into the ZPool.
@@ -297,9 +297,9 @@ cloud:
           echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
           mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
 
-          mkdir -p /var/log
-          echo "/dev/zvol/primary/pod-logs /var/log ext4 defaults,nofail 0 0" | tee -a /etc/fstab
-          mount /dev/zvol/primary/pod-logs /var/log
+          mkdir -p /var/log/pods
+          echo "/dev/zvol/primary/pod-logs /var/log/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+          mount /dev/zvol/primary/pod-logs /var/log/pods
 
           # Enable weekly ZPool trimming for the ZPool.
           # So unused storage space will be reclaimed back, from the ZVolumes into the ZPool.
