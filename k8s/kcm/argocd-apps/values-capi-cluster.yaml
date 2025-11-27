@@ -20,9 +20,6 @@ hetzner:
       name: cluster
     installImage:
       imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
-    vg0: 
-      size: 25G
-      rootVolumeSize: 10G
     diskLayoutSetupCommands: |
       
       set -e
