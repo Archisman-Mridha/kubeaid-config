@@ -6,4 +6,4 @@ cilium:
 
   
   extraArgs:
-    - "--devices=eth0,enp+"
+    - "--devices=eth0,enp+,eno+"
