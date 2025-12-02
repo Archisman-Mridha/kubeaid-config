@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    kubeaid.io/version: 20.1.1
+    kubeaid.io/version: 16.1.0
     kubeaid.io/managed-by: kubeaid
     kubeaid.io/sync-order: "10"
   name: cluster-api-operator
@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: https://github.com/Obmondo/KubeAid
       path: argocd-helm-charts/cluster-api-operator
-      targetRevision: 20.1.1
+      targetRevision: 16.1.0
       helm:
         valueFiles:
           - $values/k8s/kubeaid-cli-test/argocd-apps/values-cluster-api-operator.yaml
