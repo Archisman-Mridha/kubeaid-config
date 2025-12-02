@@ -5,22 +5,22 @@ metadata:
     kubeaid.io/version: 20.1.1
     kubeaid.io/managed-by: kubeaid
     kubeaid.io/sync-order: "10"
-  name: cluster-api-operator
+  name: rook-ceph
   namespace: argocd
   finalizers:
     - argocd.argoproj.io/resources-finalizer
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: cluster-api-operator
+    namespace: rook-ceph
   project: kubeaid
   sources:
     - repoURL: https://github.com/Obmondo/KubeAid
-      path: argocd-helm-charts/cluster-api-operator
+      path: argocd-helm-charts/rook-ceph
       targetRevision: 20.1.1
       helm:
         valueFiles:
-          - $values/k8s/kubeaid-cli-test/argocd-apps/values-cluster-api-operator.yaml
+          - $values/k8s/kubeaid-cli-test/argocd-apps/values-rook-ceph.yaml
     - repoURL: https://github.com/Archisman-Mridha/kubeaid-config
       targetRevision: HEAD
       ref: values

@@ -1,12 +1,14 @@
 forkURLs:
-  kubeaid: https://github.com/Obmondo/KubeAid
-  kubeaidConfig: https://github.com/Archisman-Mridha/kubeaid-config
+  kubeaid:
+    url: https://github.com/Obmondo/KubeAid
+    version: 20.1.1
+
+  kubeaidConfig:
+    url: https://github.com/Archisman-Mridha/kubeaid-config
 
 cluster:
   name: kubeaid-cli-test
-
   k8sVersion: v1.32.0
-  kubeaidVersion: 20.1.1
 
   additionalUsers:
     - name: archi
@@ -86,6 +88,9 @@ cloud:
         # So unused storage space will be reclaimed back, from the ZVolumes into the ZPool.
         # REFER : https://openzfs.github.io/openzfs-docs/man/master/8/zpool-trim.8.html.
         systemctl enable zfs-trim-weekly@rpool.timer --now
+
+      ceph:
+        deviceFilter: "^(nvme[01]n1p4)$"
 
     controlPlane:
       regions:

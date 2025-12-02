@@ -22,11 +22,11 @@ hetzner:
     wipeDisks: false
     sshKeyPair:
       name: kubeaid-cli-test
-    installImage:
+    installImage: 
       imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
-    vg0: 
-      size: 25G
-      rootVolumeSize: 10G
+      vg0:
+        size: 25G
+        rootVolumeSize: 10G
     diskLayoutSetupCommands: |
       
       set -e
