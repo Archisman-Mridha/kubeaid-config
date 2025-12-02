@@ -1,0 +1,123 @@
+forkURLs:
+  kubeaid: https://github.com/Obmondo/KubeAid
+  kubeaidConfig: https://github.com/Archisman-Mridha/kubeaid-config
+
+cluster:
+  name: kubeaid-cli-test
+
+  k8sVersion: v1.32.0
+  kubeaidVersion: 20.1.1
+
+  additionalUsers:
+    - name: archi
+      sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6dc7jP7zQT7qSKkFJd4pOMZmTb0kx8R29A3DbzLaDSSepEGtJ+64taQ4YI1C5/l7BFdi8blb1N135tRf54YY1v1plFDzukjxMx8GLa965T4YuSPg/1PhNQfsUcGDL/LXMktJiJP8pYvQKnOjM6KHju1GJKPlmlWHkttyFk6KmkeltF+ljPRGJhpOUjvM9RJgsYqiy6+pb8hGKxQi4dQ07duj7y7N/0pPbHg/BrtpbtHm2r/fsrFfzVwqIRg61LKxrcTZ4HPGpKPoare+X+wbp85hQOfWr6KtG9cQMjGbneZTYAYXhQxYlr2XlbGq/yj9mQJxYg/rEIL/EQY12An4zdI2hqpNlgkZwioc2agCGs3HvtQY64gpSF/M530Wx6Dm2e9eltSj+frr+WJdz3QXqO84dUENllFavL+gSGuT+MBzYOCsCAlKzKEj1EZ4ivkpYaNvTNrVqFpNMPsvuX3nAjlcl3g2Wmkb+hjPjTH84glNEvFsc2FYLSaU46jyb6UJ3aSUaJsCBIQfp4C6BVAYwEe9OzvuJrp8Ky4P5C0t0UvJgfdbUIh5TksTZ5QpyQiMvzpvmhJEWY+BEHHiI2a2ZRs8DPr9NZ0M6aut0AfxdM3YxIRcNU1m8lJc37/QgQETuzKCnQzZwsJF/HdVuXv+VW39kstpvRO/o5ORGaCg/SQ== cardno:13_819_971
+
+cloud:
+  hetzner:
+    mode: hybrid
+
+    vswitch:
+      vlanID: 4001
+      name: "kubeaid-cli-test"
+
+    hcloud:
+      zone: eu-central
+      imageName: ubuntu-24.04
+      sshKeyPairName: kubeaid-cli-test
+
+    bareMetal:
+      wipeDisks: False
+      sshKeyPair:
+        name: kubeaid-cli-test
+        publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
+        privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
+      diskLayoutSetupCommands: |
+        set -e
+
+        apt-get update -y
+        apt install zfsutils-linux -y
+
+        # In each NVMe disk, create a partition which'll take up the remaining storage space.
+        sgdisk -n 4:0:0 -t 4:fd00 -c 4:"zpool" /dev/nvme0n1
+        partprobe /dev/nvme0n1
+        sgdisk -n 4:0:0 -t 4:fd00 -c 4:"zpool" /dev/nvme1n1
+        partprobe /dev/nvme1n1
+        udevadm settle
+
+        if zpool import -f primary >/dev/null 2>&1; then
+          echo "Imported existing primary ZPool"
+        else
+          # Create a mirrored ZPool out of those 2 partitions.
+          zpool create primary mirror /dev/nvme0n1p4 /dev/nvme1n1p4
+
+          # From that ZPool, set aside 50GB for ContainerD, by creating a ZVolume (thinly provisioned).
+          #
+          # A ZFS volume is a dataset that represents a block device. ZFS volumes are identified as
+          # devices in the /dev/zvol/{dsk,rdsk}/pool directory.
+          zfs create -s -V 50G primary/containerd
+          udevadm settle
+          mkfs.ext4 /dev/zvol/primary/containerd
+
+          # From that ZPool, set aside 50GB for ephemeral volumes for pods, by creating a ZVolume (thinly provisioned).
+          zfs create -s -V 50G primary/pod-ephemeral-volumes
+          udevadm settle
+          mkfs.ext4 /dev/zvol/primary/pod-ephemeral-volumes
+
+          # From that ZPool, set aside 50GB for pod logs, by creating a (thinly provisioned)
+          # ZVolume (thinly provisioned).
+          zfs create -s -V 50G primary/pod-logs
+          udevadm settle
+          mkfs.ext4 /dev/zvol/primary/pod-logs
+        fi
+
+        mkdir -p /var/lib/containerd
+        echo "/dev/zvol/primary/containerd /var/lib/containerd ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/containerd /var/lib/containerd
+
+        mkdir -p /var/lib/kubelet/pods
+        echo "/dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/pod-ephemeral-volumes /var/lib/kubelet/pods
+
+        mkdir -p /var/log/pods
+        echo "/dev/zvol/primary/pod-logs /var/log/pods ext4 defaults,nofail 0 0" | tee -a /etc/fstab
+        mount /dev/zvol/primary/pod-logs /var/log/pods
+
+        # Enable weekly ZPool trimming for the ZPool.
+        # So unused storage space will be reclaimed back, from the ZVolumes into the ZPool.
+        # REFER : https://openzfs.github.io/openzfs-docs/man/master/8/zpool-trim.8.html.
+        systemctl enable zfs-trim-weekly@rpool.timer --now
+
+    controlPlane:
+      regions:
+        - fsn1
+        - nbg1
+        - hel1
+
+      hcloud:
+        machineType: cax11
+        replicas: 3
+        loadBalancer:
+          enabled: true
+          region: hel1
+
+    nodeGroups:
+      bareMetal:
+        - name: general
+          labels:
+            node-role.kubernetes.io/general: ""
+            node.cluster.x-k8s.io/nodegroup: general
+          taints: []
+          bareMetalHosts:
+            - serverID: "2836489" # 116.202.170.35
+              wwns:
+                - "eui.002538bb31c60104"
+                - "eui.002538bb31c600e5"
+            - serverID: "2836490" # 116.202.170.31
+              wwns:
+                - "eui.002538b531a43d51"
+                - "eui.002538b531a43d50"
+            - serverID: "2836504" # 116.202.170.33
+              wwns:
+                - "eui.000000000000000100a075255218338c"
+                - "eui.000000000000000100a07525521833ce"
+
