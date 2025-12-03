@@ -93,7 +93,7 @@ cloud:
         # which'll be used by CEPH.
         sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme0n1
         partprobe /dev/nvme0n1
-        sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme1n1
+        sgdisk -n 5:0:0 -t 5:fd00 -c 5:"" /dev/nvme1n1
         partprobe /dev/nvme1n1
         udevadm settle
 
