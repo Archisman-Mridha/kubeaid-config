@@ -34,17 +34,31 @@ hetzner:
       apt-get update -y
       apt install zfsutils-linux -y
       
-      # In each NVMe disk, create a partition which'll take up the remaining storage space.
-      sgdisk -n 4:0:0 -t 4:fd00 -c 4:"zpool" /dev/nvme0n1
+      # For each NVMe disk,
+      # allocate 50% of the remaining space (i.e., partitions nvme0n1p4 and nvme1n1p4) to the
+      # primary ZFS pool,
+      # and rest (i.e., partitions nvme0n1p5 and nvme1n1p5) to Rook CEPH.
+      
+      START=$(sgdisk -f /dev/nvme0n1)
+      END=$(sgdisk -E /dev/nvme0n1)
+      HALF=$(( START + (END - START) / 2 ))
+      sgdisk -n 4:${START}:${HALF} -t 4:fd00 -c 4:"zpool" /dev/nvme0n1
+      sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme0n1
       partprobe /dev/nvme0n1
-      sgdisk -n 4:0:0 -t 4:fd00 -c 4:"zpool" /dev/nvme1n1
+      
+      START=$(sgdisk -f /dev/nvme1n1)
+      END=$(sgdisk -E /dev/nvme1n1)
+      HALF=$(( START + (END - START) / 2 ))
+      sgdisk -n 4:${START}:${HALF} -t 4:fd00 -c 4:"zpool" /dev/nvme1n1
+      sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme1n1
       partprobe /dev/nvme1n1
+      
       udevadm settle
       
       if zpool import -f primary >/dev/null 2>&1; then
         echo "Imported existing primary ZPool"
       else
-        # Create a mirrored ZPool out of those 2 partitions.
+        # Create a mirrored ZPool out of nvme0n1p4 and nvme1n1p4 partitions.
         zpool create primary mirror /dev/nvme0n1p4 /dev/nvme1n1p4
       
         # From that ZPool, set aside 50GB for ContainerD, by creating a ZVolume (thinly provisioned).
@@ -83,14 +97,6 @@ hetzner:
       # So unused storage space will be reclaimed back, from the ZVolumes into the ZPool.
       # REFER : https://openzfs.github.io/openzfs-docs/man/master/8/zpool-trim.8.html.
       systemctl enable zfs-trim-weekly@rpool.timer --now
-      
-      # In each NVMe disk, create the 5th partition taking up the remaining storage space,
-      # which'll be used by CEPH.
-      sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme0n1
-      partprobe /dev/nvme0n1
-      sgdisk -n 5:0:0 -t 5:fd00 -c 5:"" /dev/nvme1n1
-      partprobe /dev/nvme1n1
-      udevadm settle
       
 
   controlPlane:
