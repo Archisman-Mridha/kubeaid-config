@@ -28,8 +28,8 @@ rook-ceph-cluster:
       all:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: node.cluster.x-k8s.io/cloud-provider
-                  operator: NotIn
-                  values: ["hcloud"]
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node.cluster.x-k8s.io/cloud-provider
+                    operator: NotIn
+                    values: ["hcloud"]
