@@ -23,7 +23,7 @@ rook-ceph-cluster:
 
   cephClusterSpec:
     storage:
-      deviceFilter: ^(nvme[01]n1p4)$
+      deviceFilter: ^(nvme[01]n1p5)$
     placement:
       all:
         nodeAffinity:
