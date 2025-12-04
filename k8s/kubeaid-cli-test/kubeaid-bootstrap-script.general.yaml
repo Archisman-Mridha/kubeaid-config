@@ -48,14 +48,14 @@ cloud:
         END=$(sgdisk -E /dev/nvme0n1)
         HALF=$(( START + (END - START) / 2 ))
         sgdisk -n 4:${START}:${HALF} -t 4:fd00 -c 4:"zpool" /dev/nvme0n1
-        sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme0n1
+        sgdisk -n 5:0:0 -t 5:fd00 -c 5:"" /dev/nvme0n1
         partprobe /dev/nvme0n1
 
         START=$(sgdisk -f /dev/nvme1n1)
         END=$(sgdisk -E /dev/nvme1n1)
         HALF=$(( START + (END - START) / 2 ))
         sgdisk -n 4:${START}:${HALF} -t 4:fd00 -c 4:"zpool" /dev/nvme1n1
-        sgdisk -n 5:0:0 -t 5:fd00 -c 5:"ceph" /dev/nvme1n1
+        sgdisk -n 5:0:0 -t 5:fd00 -c 5:"" /dev/nvme1n1
         partprobe /dev/nvme1n1
 
         udevadm settle
