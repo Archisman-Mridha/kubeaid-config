@@ -5,6 +5,7 @@ name: bare-metal-test
 
 cloudProvider:
   none: {}
+  disableBundledCSIDrivers: true
 
 versions:
   kubernetes: v1.32.0
