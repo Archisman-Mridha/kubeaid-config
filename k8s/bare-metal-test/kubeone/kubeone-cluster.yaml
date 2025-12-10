@@ -4,8 +4,6 @@ kind: KubeOneCluster
 name: bare-metal-test
 
 cloudProvider:
-  external: true
-  disableBundledCSIDrivers: true
   none: {}
 
 versions:
