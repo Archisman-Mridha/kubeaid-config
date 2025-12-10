@@ -113,16 +113,14 @@ cloud:
 
     controlPlane:
       regions:
-        - hel1
         - fsn1
-        - nbg1
 
       hcloud:
         machineType: cax11
         replicas: 1 # 3
         loadBalancer:
           enabled: true
-          region: hel1
+          region: fsn1
 
     nodeGroups:
       bareMetal:
