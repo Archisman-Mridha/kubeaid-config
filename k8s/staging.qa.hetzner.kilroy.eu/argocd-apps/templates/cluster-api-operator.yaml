@@ -15,7 +15,7 @@ spec:
     namespace: cluster-api-operator
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/KubeAid
+    - repoURL: https://github.com/Obmondo/KubeAid
       path: argocd-helm-charts/cluster-api-operator
       targetRevision: 16.0.1
       helm:

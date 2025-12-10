@@ -3,7 +3,7 @@ global:
   kubernetes:
     version: v1.32.0
   kubeaid:
-    repo: https://github.com/Archisman-Mridha/KubeAid
+    repo: https://github.com/Obmondo/KubeAid
   kubeaidConfig:
     repo: https://github.com/Archisman-Mridha/kubeaid-config
   additionalUsers: 
@@ -112,7 +112,7 @@ hetzner:
     
     hcloud: 
       machineType: cax11
-      replicas: 3
+      replicas: 1
       loadBalancer:
         enabled: true
         region: hel1
@@ -130,12 +130,4 @@ hetzner:
             wwns:
               - eui.002538bb31c60104
               - eui.002538bb31c600e5
-          - serverID: "2836490"
-            wwns:
-              - eui.002538b531a43d51
-              - eui.002538b531a43d50
-          - serverID: "2836504"
-            wwns:
-              - eui.000000000000000100a075255218338c
-              - eui.000000000000000100a07525521833ce
         diskLayoutSetupCommands: ""

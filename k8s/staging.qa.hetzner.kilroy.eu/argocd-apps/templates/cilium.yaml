@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    kubeaid.io/version: 20.1.3
+    kubeaid.io/version: 21.0.0
     kubeaid.io/managed-by: kubeaid
     kubeaid.io/sync-order: "10"
   name: cilium
@@ -13,9 +13,9 @@ spec:
     server: https://kubernetes.default.svc
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/KubeAid
+    - repoURL: https://github.com/Obmondo/KubeAid
       path: argocd-helm-charts/cilium
-      targetRevision: 20.1.3
+      targetRevision: 21.0.0
       helm:
         valueFiles:
           - $values/k8s/staging.qa.hetzner.kilroy.eu/argocd-apps/values-cilium.yaml
