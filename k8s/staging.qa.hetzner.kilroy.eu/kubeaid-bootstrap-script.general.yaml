@@ -8,7 +8,7 @@ forkURLs:
     directory: staging.qa.hetzner.kilroy.eu
 
 cluster:
-  name: qa-staging-hetzner
+  name: qa-staging-hetzner-archi
   k8sVersion: v1.32.0
 
   additionalUsers:

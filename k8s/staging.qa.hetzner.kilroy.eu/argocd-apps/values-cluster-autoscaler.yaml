@@ -19,7 +19,7 @@ cluster-autoscaler:
     cordon-node-before-terminating: true
 
   autoDiscovery:
-    clusterName: qa-staging-hetzner
+    clusterName: qa-staging-hetzner-archi
     namespace: capi-cluster
 
 enableClusterAPIScaleFromZeroSupport:
