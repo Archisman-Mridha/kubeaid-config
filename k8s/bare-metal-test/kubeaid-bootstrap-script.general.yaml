@@ -1,17 +1,14 @@
 forkURLs:
   kubeaid:
-    https://github.com/Obmondo/KubeAid
-    # url: https://github.com/Obmondo/KubeAid
-    # version: 21.0.0
+    url: https://github.com/Obmondo/KubeAid
+    version: 21.0.0
 
   kubeaidConfig:
-    https://github.com/Archisman-Mridha/kubeaid-config
-    # url: https://github.com/Archisman-Mridha/kubeaid-config
+    url: https://github.com/Archisman-Mridha/kubeaid-config
 
 cluster:
   name: bare-metal-test
   k8sVersion: v1.32.0
-  kubeaidVersion: 21.0.0
 
 cloud:
   bare-metal:
