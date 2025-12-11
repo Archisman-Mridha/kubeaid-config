@@ -105,7 +105,7 @@ hetzner:
 
   controlPlane:
     regions: 
-      - nbg1
+      - hel1
 
     
     hcloud: 
@@ -113,7 +113,7 @@ hetzner:
       replicas: 3
       loadBalancer:
         enabled: true
-        region: nbg1
+        region: hel1
 
   nodeGroups: 
     hcloud: []
