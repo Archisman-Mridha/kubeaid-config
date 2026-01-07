@@ -8,7 +8,7 @@ forkURLs:
 
 cluster:
   name: bare-metal-test
-  k8sVersion: v1.32.0
+  k8sVersion: v1.35.0
 
 cloud:
   bare-metal:
@@ -19,8 +19,8 @@ cloud:
 
     controlPlane:
       endpoint:
-        host: "65.108.63.32"
+        host: "77.42.78.86"
         port: 6443
       hosts:
-        - publicAddress: "65.108.63.32"
+        - publicAddress: "77.42.78.86"
 
