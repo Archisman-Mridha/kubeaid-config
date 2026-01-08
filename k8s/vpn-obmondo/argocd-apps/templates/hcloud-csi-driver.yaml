@@ -12,13 +12,13 @@ spec:
     namespace: kube-system
     server: https://kubernetes.default.svc
   sources:
-    - repoURL: https://github.com/Obmondo/KubeAid
+    - repoURL: https://gitea.obmondo.com/EnableIT/kubeaid
       path: argocd-helm-charts/hcloud-csi-driver
       targetRevision: 21.0.0
       helm:
         valueFiles:
           - $values/k8s/vpn-obmondo/argocd-apps/values-hcloud-csi-driver.yaml
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid-config.git
+    - repoURL: https://gitea.obmondo.com/EnableIT/kubeaid-config-enableit
       targetRevision: HEAD
       ref: values
   project: kubeaid

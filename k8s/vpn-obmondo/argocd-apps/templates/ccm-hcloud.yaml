@@ -13,13 +13,13 @@ spec:
     server: https://kubernetes.default.svc
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Obmondo/KubeAid
+    - repoURL: https://gitea.obmondo.com/EnableIT/kubeaid
       path: argocd-helm-charts/ccm-hcloud
       targetRevision: 21.0.0
       helm:
         valueFiles:
           - $values/k8s/vpn-obmondo/argocd-apps/values-ccm-hcloud.yaml
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid-config.git
+    - repoURL: https://gitea.obmondo.com/EnableIT/kubeaid-config-enableit
       targetRevision: HEAD
       ref: values
   syncPolicy:

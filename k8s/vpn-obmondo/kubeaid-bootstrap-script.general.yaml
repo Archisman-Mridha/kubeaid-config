@@ -2,12 +2,12 @@ forkURLs:
   # KubeAid repository URL (in HTTPs syntax).
   # Defaults to Obmondo's KubeAid repository.
   kubeaid:
-    url: https://github.com/Obmondo/KubeAid
+    url: https://gitea.obmondo.com/EnableIT/kubeaid
     version: 21.0.0
 
   # Your KubeAid config repository URL (in HTTPs syntax).
   kubeaidConfig:
-    url: https://github.com/Archisman-Mridha/kubeaid-config.git
+    url: https://gitea.obmondo.com/EnableIT/kubeaid-config-enableit
 
 # Kubernetes cluster and control-plane specific configurations.
 cluster:
