@@ -1,0 +1,30 @@
+git:
+  privateKeyFilePath: /Users/archismanmridha/.ssh/github
+  # useSSHAgentAuth: true
+
+forkURLs:
+  kubeaid:
+    url: git@github.com:Archisman-Mridha/kubeaid.git
+    version: 21.0.0
+
+  kubeaidConfig:
+    url: git@github.com:Archisman-Mridha/kubeaid-config.git
+
+cluster:
+  name: bare-metal-test
+  k8sVersion: v1.33.0
+
+cloud:
+  bare-metal:
+    ssh:
+      port: 22
+      privateKey:
+        privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
+
+    controlPlane:
+      endpoint:
+        host: "46.62.232.53"
+        port: 6443
+      hosts:
+        - publicAddress: "46.62.232.53"
+
