@@ -1,1 +1,7 @@
 ---
+cilium:
+  kubeProxyReplacement: "true"
+  k8sServiceHost: 46.62.232.53
+  k8sServicePort: 6443
+
+  
