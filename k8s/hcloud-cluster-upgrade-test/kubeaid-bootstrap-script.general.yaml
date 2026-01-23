@@ -1,10 +1,13 @@
 forkURLs:
   kubeaid:
-    url: https://github.com/Obmondo/KubeAid
+    url: git@github.com:Archisman-Mridha/kubeaid.git
     version: 21.0.0
 
   kubeaidConfig:
-    url: https://github.com/Archisman-Mridha/kubeaid-config
+    url: git@github.com:Archisman-Mridha/kubeaid-config.git
+
+git:
+  privateKeyFilePath: /Users/archismanmridha/.ssh/github
 
 cluster:
   name: hcloud-cluster-upgrade-test

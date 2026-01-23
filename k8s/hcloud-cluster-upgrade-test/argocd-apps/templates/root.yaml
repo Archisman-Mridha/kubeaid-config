@@ -16,7 +16,7 @@ spec:
   project: kubeaid
   source:
     path: k8s/hcloud-cluster-upgrade-test/argocd-apps
-    repoURL: https://github.com/Archisman-Mridha/kubeaid-config
+    repoURL: https://github.com/Archisman-Mridha/kubeaid-config.git
     targetRevision: HEAD
   syncPolicy:
     syncOptions:
