@@ -7,7 +7,8 @@ forkURLs:
     url: git@github.com:Archisman-Mridha/kubeaid-config.git
 
 git:
-  privateKeyFilePath: /Users/archismanmridha/.ssh/github
+  # privateKeyFilePath: /Users/archismanmridha/.ssh/github
+  useSSHAgentAuth: true
 
 cluster:
   name: hcloud-cluster-upgrade-test
