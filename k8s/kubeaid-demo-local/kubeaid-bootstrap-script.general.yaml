@@ -1,22 +1,15 @@
 forkURLs:
-  # KubeAid repository URL (in HTTPs syntax).
-  # Defaults to Obmondo's KubeAid repository.
   kubeaid:
-    url: https://github.com/Archisman-Mridha/KubeAid
+    url: git@github.com:Archisman-Mridha/KubeAid
     version: HEAD
 
-  # Your KubeAid config repository URL (in HTTPs syntax).
   kubeaidConfig:
-    url: https://github.com/Archisman-Mridha/kubeaid-config
+    url: git@github.com:Archisman-Mridha/kubeaid-config
 
-# Kubernetes cluster and control-plane specific configurations.
 cluster:
-  # Kubernetes cluster name.
   name: kubeaid-demo-local
 
-  # Kubernetes version to use.
-  # NOTE : Make sure that the AMI you're using, is targetted towards this Kubernetes version.
-  k8sVersion: v1.32.0
+  k8sVersion: v1.33.0
 
 cloud:
   local: {}

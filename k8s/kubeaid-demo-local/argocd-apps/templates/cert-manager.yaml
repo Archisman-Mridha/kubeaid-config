@@ -13,13 +13,13 @@ spec:
     server: https://kubernetes.default.svc
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/KubeAid
+    - repoURL: git@github.com:Archisman-Mridha/KubeAid
       path: argocd-helm-charts/cert-manager
       targetRevision: HEAD
       helm:
         valueFiles:
           - $values/k8s/kubeaid-demo-local/argocd-apps/values-cert-manager.yaml
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid-config
+    - repoURL: git@github.com:Archisman-Mridha/kubeaid-config
       targetRevision: HEAD
       ref: values
   syncPolicy:

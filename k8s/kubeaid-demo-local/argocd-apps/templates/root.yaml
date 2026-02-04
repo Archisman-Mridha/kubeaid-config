@@ -16,7 +16,7 @@ spec:
   project: kubeaid
   source:
     path: k8s/kubeaid-demo-local/argocd-apps
-    repoURL: https://github.com/Archisman-Mridha/kubeaid-config
+    repoURL: git@github.com:Archisman-Mridha/kubeaid-config
     targetRevision: HEAD
   syncPolicy:
     syncOptions:
