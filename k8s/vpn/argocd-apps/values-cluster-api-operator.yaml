@@ -1,6 +1,17 @@
 ---
-
 cluster-api-operator:
+
+  core:
+    cluster-api:
+      namespace: capi-cluster
+  bootstrap:
+    kubeadm:
+      namespace: capi-cluster
+  controlPlane:
+    kubeadm:
+      namespace: capi-cluster
+
+
   configSecret:
     name: cloud-credentials
     namespace: capi-cluster
