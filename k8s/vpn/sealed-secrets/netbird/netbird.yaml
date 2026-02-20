@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: netbird
+  namespace: netbird
+type: Opaque
+stringData: {}

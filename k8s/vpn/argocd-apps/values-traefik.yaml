@@ -1,0 +1,26 @@
+traefik:
+  service:
+    annotations:
+      load-balancer.hetzner.cloud/network-zone: eu-central
+
+  providers:
+    kubernetesCRD:
+      enabled: true
+      allowCrossNamespace: true
+    kubernetesIngress:
+      publishedService:
+        enabled: true
+
+  podDisruptionBudget:
+    enabled: false
+
+  tlsStore:
+    default:
+      defaultCertificate:
+        secretName: vpn-obmondo-com
+
+wildcardCertificates:
+  enabled: true
+  issuer: letsencrypt
+  domains:
+    - "*.vpn.obmondo.com"

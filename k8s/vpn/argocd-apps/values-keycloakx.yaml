@@ -1,0 +1,23 @@
+keycloakx:
+  dbchecker:
+    enabled: true
+  database:
+    hostname: keycloak-pgsql-rw
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+    rules:
+      - host: keycloak.vpn.obmondo.com
+        paths:
+          - path: /
+            pathType: Prefix
+
+postgresql:
+  storageClass: hcloud-volumes
+  backups:
+    enabled: false
+
+blackbox:
+  probe: false
