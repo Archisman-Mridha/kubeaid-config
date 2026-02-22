@@ -88,7 +88,7 @@ netbird:
             "TokenEndpoint": "https://keycloak.vpn.obmondo.com/auth/realms/Obmondo/protocol/openid-connect/token",
             "DeviceAuthEndpoint": "",
             "AuthorizationEndpoint": "",
-            "Scope": "openid profile email offline_access api",
+            "Scope": "openid profile email offline_access netbird-api",
             "UseIDToken": false,
             "RedirectURLs": null
           }
@@ -162,7 +162,7 @@ netbird:
       NETBIRD_MGMT_GRPC_API_ENDPOINT: https://netbird.vpn.obmondo.com:443
       # OIDC
       AUTH_AUTHORITY: https://keycloak.vpn.obmondo.com/auth/realms/Obmondo
-      AUTH_SUPPORTED_SCOPES: openid profile email offline_access api
+      AUTH_SUPPORTED_SCOPES: openid profile email offline_access netbird-api
     ingress:
       className: traefik
       tls: []
@@ -180,3 +180,8 @@ coturn:
       secretKeys:
         username: turnServerUser
         password: turnServerPassword
+
+externalDatabases:
+  netbird:
+    logicalbackup:
+      enabled: false
