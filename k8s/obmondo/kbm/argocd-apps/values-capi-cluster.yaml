@@ -1,0 +1,164 @@
+global:
+  clusterName: kbm
+  kubernetes:
+    version: v1.32.0
+  kubeaid:
+    repo: git@github.com:Archisman-Mridha/kubeaid.git
+  kubeaidConfig:
+    repo: git@github.com:Archisman-Mridha/kubeaid-config.git
+  additionalUsers: 
+    - name: archi
+      sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6dc7jP7zQT7qSKkFJd4pOMZmTb0kx8R29A3DbzLaDSSepEGtJ+64taQ4YI1C5/l7BFdi8blb1N135tRf54YY1v1plFDzukjxMx8GLa965T4YuSPg/1PhNQfsUcGDL/LXMktJiJP8pYvQKnOjM6KHju1GJKPlmlWHkttyFk6KmkeltF+ljPRGJhpOUjvM9RJgsYqiy6+pb8hGKxQi4dQ07duj7y7N/0pPbHg/BrtpbtHm2r/fsrFfzVwqIRg61LKxrcTZ4HPGpKPoare+X+wbp85hQOfWr6KtG9cQMjGbneZTYAYXhQxYlr2XlbGq/yj9mQJxYg/rEIL/EQY12An4zdI2hqpNlgkZwioc2agCGs3HvtQY64gpSF/M530Wx6Dm2e9eltSj+frr+WJdz3QXqO84dUENllFavL+gSGuT+MBzYOCsCAlKzKEj1EZ4ivkpYaNvTNrVqFpNMPsvuX3nAjlcl3g2Wmkb+hjPjTH84glNEvFsc2FYLSaU46jyb6UJ3aSUaJsCBIQfp4C6BVAYwEe9OzvuJrp8Ky4P5C0t0UvJgfdbUIh5TksTZ5QpyQiMvzpvmhJEWY+BEHHiI2a2ZRs8DPr9NZ0M6aut0AfxdM3YxIRcNU1m8lJc37/QgQETuzKCnQzZwsJF/HdVuXv+VW39kstpvRO/o5ORGaCg/SQ== cardno:13_819_971
+provider:
+  hetzner: true
+
+hetzner:
+  mode: bare-metal
+  bareMetal:
+    wipeDisks: true
+    sshKeyPair:
+      name: cluster
+    installImage: 
+      imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
+      vg0:
+        size: 80
+        rootVolumeSize: 50
+
+  controlPlane:
+    regions: 
+      - fsn1
+      - nbg1
+      - hel1
+
+    
+    
+    bareMetal:
+      endpoint: 
+        isFailoverIP: true
+        host: 95.216.30.44
+      bareMetalHosts: 
+        - serverID: "1455726"
+        - serverID: "1455733"
+        - serverID: "1455734"
+      diskLayoutSetupCommands: |
+        set -e
+
+        apt-get update -y
+        apt install zfsutils-linux -y
+
+        # Create necessary partitions.
+
+        printf "d\n4\nw\n" | fdisk /dev/nvme0n1
+        echo ",,E" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
+        echo ",462G,L" | sfdisk -N 5 /dev/nvme0n1 --force --no-reread
+
+        echo ",,L" | sfdisk -N 6 /dev/nvme0n1 --force --no-reread
+
+        partprobe /dev/nvme0n1
+        udevadm settle
+
+        printf "d\n4\nw\n" | fdisk /dev/nvme1n1
+        echo ",,E" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
+        echo ",462G,L" | sfdisk -N 5 /dev/nvme1n1 --force --no-reread
+
+        echo ",,L" | sfdisk -N 6 /dev/nvme1n1 --force --no-reread
+
+        partprobe /dev/nvme1n1
+        udevadm settle
+
+        if zpool import -f primary >/dev/null 2>&1; then
+          echo "Imported existing primary ZFS pool"
+        else
+          # Create the ZFS pool with RAIDZ-1 enabled.
+          zpool create primary raidz1 \
+                /dev/nvme0n1p5  \ 
+            
+                /dev/nvme1n1p5 
+            
+
+          # Create the filesystem for ContainerD, to store container images.
+          zfs create pool/containerd
+          zfs set mountpoint=/var/lib/containerd pool/containerd
+
+          # Create the filesystem where pod logs will be stored.
+          zfs create pool/pod-logs
+          zfs set mountpoint=/var/log/pods pool/pod-logs
+
+          # Create the filesystem where pod ephemeral volumes will be stored.
+          zfs create pool/pod-ephemeral-volumes
+          zfs set mountpoint=/var/lib/kubelet/pods pool/pod-ephemeral-volumes
+
+          # Enable weekly ZPool trimming for the ZPool.
+          # So unused storage space will be reclaimed back, into the ZFS pool.
+          # REFER : https://openzfs.github.io/openzfs-docs/man/master/8/zpool-trim.8.html.
+          systemctl enable zfs-trim-weekly@rpool.timer --now
+        fi
+
+    
+
+  nodeGroups:
+    hcloud: 
+      []
+
+    bareMetal:
+      - name: general
+        hosts: 
+          - serverID: "1414813"
+          - serverID: "1454837"
+          - serverID: "1454838"
+        diskLayoutSetupCommands: |
+          set -e
+
+          apt-get update -y
+          apt install zfsutils-linux -y
+
+          # Create necessary partitions.
+
+          printf "d\n4\nw\n" | fdisk /dev/sda
+          echo ",,E" | sfdisk -N 4 /dev/sda --force --no-reread
+          echo ",1K,L" | sfdisk -N 5 /dev/sda --force --no-reread
+
+          echo ",,L" | sfdisk -N 6 /dev/sda --force --no-reread
+
+          partprobe /dev/sda
+          udevadm settle
+
+          printf "d\n4\nw\n" | fdisk /dev/sdb
+          echo ",,E" | sfdisk -N 4 /dev/sdb --force --no-reread
+          echo ",1K,L" | sfdisk -N 5 /dev/sdb --force --no-reread
+
+          echo ",,L" | sfdisk -N 6 /dev/sdb --force --no-reread
+
+          partprobe /dev/sdb
+          udevadm settle
+
+          if zpool import -f primary >/dev/null 2>&1; then
+            echo "Imported existing primary ZFS pool"
+          else
+            # Create the ZFS pool with RAIDZ-1 enabled.
+            zpool create primary raidz1 \
+                  /dev/sda5  \ 
+                  /dev/sdb5 
+
+            # Create the filesystem for ContainerD, to store container images.
+            zfs create pool/containerd
+            zfs set mountpoint=/var/lib/containerd pool/containerd
+
+            # Create the filesystem where pod logs will be stored.
+            zfs create pool/pod-logs
+            zfs set mountpoint=/var/log/pods pool/pod-logs
+
+            # Create the filesystem where pod ephemeral volumes will be stored.
+            zfs create pool/pod-ephemeral-volumes
+            zfs set mountpoint=/var/lib/kubelet/pods pool/pod-ephemeral-volumes
+
+            # Enable weekly ZPool trimming for the ZPool.
+            # So unused storage space will be reclaimed back, into the ZFS pool.
+            # REFER : https://openzfs.github.io/openzfs-docs/man/master/8/zpool-trim.8.html.
+            systemctl enable zfs-trim-weekly@rpool.timer --now
+          fi
+        labels: 
+          node-role.kubernetes.io/general: ""
+          node.cluster.x-k8s.io/nodegroup: general
+        taints: 
+          []
