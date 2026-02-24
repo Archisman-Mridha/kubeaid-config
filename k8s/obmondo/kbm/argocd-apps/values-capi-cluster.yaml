@@ -72,7 +72,6 @@ hetzner:
           # Create the ZFS pool with RAIDZ-1 enabled.
           zpool create primary raidz1 \
                 /dev/nvme0n1p5  \ 
-            
                 /dev/nvme1n1p5 
             
 
@@ -97,8 +96,7 @@ hetzner:
     
 
   nodeGroups:
-    hcloud: 
-      []
+    hcloud: []
 
     bareMetal:
       - name: general
@@ -160,5 +158,4 @@ hetzner:
         labels: 
           node-role.kubernetes.io/general: ""
           node.cluster.x-k8s.io/nodegroup: general
-        taints: 
-          []
+        taints: []
