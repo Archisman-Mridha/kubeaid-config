@@ -15,7 +15,7 @@ provider:
 hetzner:
   mode: bare-metal
   bareMetal:
-    wipeDisks: true
+    wipeDisks: false
     sshKeyPair:
       name: cluster
     installImage:
@@ -47,8 +47,8 @@ hetzner:
             - eui.002538b221d0184c
         - serverID: "1455734"
           wwns:
-            - eui.002538ba51b16ee5
             - eui.002538b951b25f90
+            - eui.002538ba51b16ee5
       diskLayoutSetupCommands: |
         set -e
 
@@ -58,7 +58,7 @@ hetzner:
         # Create necessary partitions.
 
         printf "d\n4\nw\n" | fdisk /dev/nvme0n1
-        echo ",,E" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
+        echo ",1K,L" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
         echo ",462G,L" | sfdisk -N 5 /dev/nvme0n1 --force --no-reread
 
         echo ",,L" | sfdisk -N 6 /dev/nvme0n1 --force --no-reread
@@ -67,7 +67,7 @@ hetzner:
         udevadm settle
 
         printf "d\n4\nw\n" | fdisk /dev/nvme1n1
-        echo ",,E" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
+        echo ",1K,L" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
         echo ",462G,L" | sfdisk -N 5 /dev/nvme1n1 --force --no-reread
 
         echo ",,L" | sfdisk -N 6 /dev/nvme1n1 --force --no-reread
@@ -131,7 +131,7 @@ hetzner:
           # Create necessary partitions.
 
           printf "d\n4\nw\n" | fdisk /dev/sda
-          echo ",,E" | sfdisk -N 4 /dev/sda --force --no-reread
+          echo ",1K,L" | sfdisk -N 4 /dev/sda --force --no-reread
           echo ",1K,L" | sfdisk -N 5 /dev/sda --force --no-reread
 
           echo ",,L" | sfdisk -N 6 /dev/sda --force --no-reread
@@ -140,7 +140,7 @@ hetzner:
           udevadm settle
 
           printf "d\n4\nw\n" | fdisk /dev/sdb
-          echo ",,E" | sfdisk -N 4 /dev/sdb --force --no-reread
+          echo ",1K,L" | sfdisk -N 4 /dev/sdb --force --no-reread
           echo ",1K,L" | sfdisk -N 5 /dev/sdb --force --no-reread
 
           echo ",,L" | sfdisk -N 6 /dev/sdb --force --no-reread

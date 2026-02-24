@@ -33,7 +33,7 @@ cloud:
       name: kbm
 
     bareMetal:
-      wipeDisks: true
+      wipeDisks: false
       sshKeyPair:
         name: cluster
         publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
