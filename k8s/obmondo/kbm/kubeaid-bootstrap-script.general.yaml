@@ -50,7 +50,7 @@ cloud:
           - serverID: "1455733" # 135.181.21.154
           - serverID: "1455734" # 135.181.21.153
         zfs:
-          size: 462
+          size: 424
 
     nodeGroups:
       bareMetal:
