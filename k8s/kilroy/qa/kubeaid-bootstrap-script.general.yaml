@@ -11,7 +11,7 @@ forkURLs:
 
 cluster:
   name: qa
-  k8sVersion: v1.34.0
+  k8sVersion: v1.33.0
   argoCD:
     deployKeys:
       kubeaid:
@@ -37,8 +37,6 @@ cloud:
 
     controlPlane:
       regions:
-        - fsn1
-        - nbg1
         - hel1
 
       hcloud:

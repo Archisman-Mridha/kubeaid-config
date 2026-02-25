@@ -1,7 +1,7 @@
 global:
   clusterName: qa
   kubernetes:
-    version: v1.34.0
+    version: v1.33.0
   kubeaid:
     repo: git@github.com:Archisman-Mridha/KubeAid.git
   kubeaidConfig:
@@ -29,8 +29,6 @@ hetzner:
 
   controlPlane:
     regions: 
-      - fsn1
-      - nbg1
       - hel1
 
     
