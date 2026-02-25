@@ -58,7 +58,7 @@ hetzner:
         # Create necessary partitions.
 
         printf "d\n4\nw\n" | fdisk /dev/nvme0n1
-        echo ",,E" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
+        echo ",1K,L" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
         echo ",462G,L" | sfdisk -N 5 /dev/nvme0n1 --force --no-reread
 
         echo ",,L" | sfdisk -N 6 /dev/nvme0n1 --force --no-reread
@@ -67,7 +67,7 @@ hetzner:
         udevadm settle
 
         printf "d\n4\nw\n" | fdisk /dev/nvme1n1
-        echo ",,E" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
+        echo ",1K,L" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
         echo ",462G,L" | sfdisk -N 5 /dev/nvme1n1 --force --no-reread
 
         echo ",,L" | sfdisk -N 6 /dev/nvme1n1 --force --no-reread
