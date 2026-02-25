@@ -48,16 +48,16 @@ hetzner:
         bareMetalHosts: 
           - serverID: "2836489"
             wwns:
-              - eui.002538bb31c600e5
               - eui.002538bb31c60104
+              - eui.002538bb31c600e5
           - serverID: "2836490"
             wwns:
-              - eui.002538b531a43d51
               - eui.002538b531a43d50
+              - eui.002538b531a43d51
           - serverID: "2836504"
             wwns:
-              - eui.000000000000000100a075255218338c
               - eui.000000000000000100a07525521833ce
+              - eui.000000000000000100a075255218338c
         diskLayoutSetupCommands: |
           set -e
 
@@ -93,16 +93,16 @@ hetzner:
                   /dev/nvme1n1p5 
 
             # Create the filesystem for ContainerD, to store container images.
-            zfs create pool/containerd
-            zfs set mountpoint=/var/lib/containerd pool/containerd
+            zfs create primary/containerd
+            zfs set mountpoint=/var/lib/containerd primary/containerd
 
             # Create the filesystem where pod logs will be stored.
-            zfs create pool/pod-logs
-            zfs set mountpoint=/var/log/pods pool/pod-logs
+            zfs create primary/pod-logs
+            zfs set mountpoint=/var/log/pods primary/pod-logs
 
             # Create the filesystem where pod ephemeral volumes will be stored.
-            zfs create pool/pod-ephemeral-volumes
-            zfs set mountpoint=/var/lib/kubelet/pods pool/pod-ephemeral-volumes
+            zfs create primary/pod-ephemeral-volumes
+            zfs set mountpoint=/var/lib/kubelet/pods primary/pod-ephemeral-volumes
 
             # Enable weekly ZPool trimming for the ZPool.
             # So unused storage space will be reclaimed back, into the ZFS pool.
