@@ -56,8 +56,8 @@ hetzner:
               - eui.002538b531a43d51
           - serverID: "2836504"
             wwns:
-              - eui.000000000000000100a07525521833ce
               - eui.000000000000000100a075255218338c
+              - eui.000000000000000100a07525521833ce
         diskLayoutSetupCommands: |
           set -e
 
