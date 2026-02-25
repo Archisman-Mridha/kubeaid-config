@@ -28,10 +28,6 @@ cloud:
   hetzner:
     mode: bare-metal
 
-    vswitch:
-      vlanID: 4000
-      name: kbm
-
     bareMetal:
       wipeDisks: false
       sshKeyPair:

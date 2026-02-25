@@ -39,12 +39,12 @@ hetzner:
       bareMetalHosts: 
         - serverID: "1455726"
           wwns:
-            - eui.002538b341beb77c
             - eui.002538b121b71e1e
+            - eui.002538b341beb77c
         - serverID: "1455733"
           wwns:
-            - eui.002538ba51b16ee7
             - eui.002538b221d0184c
+            - eui.002538ba51b16ee7
         - serverID: "1455734"
           wwns:
             - eui.002538b951b25f90
@@ -58,7 +58,7 @@ hetzner:
         # Create necessary partitions.
 
         printf "d\n4\nw\n" | fdisk /dev/nvme0n1
-        echo ",1K,L" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
+        echo ",,E" | sfdisk -N 4 /dev/nvme0n1 --force --no-reread
         echo ",462G,L" | sfdisk -N 5 /dev/nvme0n1 --force --no-reread
 
         echo ",,L" | sfdisk -N 6 /dev/nvme0n1 --force --no-reread
@@ -67,7 +67,7 @@ hetzner:
         udevadm settle
 
         printf "d\n4\nw\n" | fdisk /dev/nvme1n1
-        echo ",1K,L" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
+        echo ",,E" | sfdisk -N 4 /dev/nvme1n1 --force --no-reread
         echo ",462G,L" | sfdisk -N 5 /dev/nvme1n1 --force --no-reread
 
         echo ",,L" | sfdisk -N 6 /dev/nvme1n1 --force --no-reread
