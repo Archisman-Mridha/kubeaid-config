@@ -48,8 +48,8 @@ hetzner:
         bareMetalHosts: 
           - serverID: "2836489"
             wwns:
-              - eui.002538bb31c60104
               - eui.002538bb31c600e5
+              - eui.002538bb31c60104
           - serverID: "2836490"
             wwns:
               - eui.002538b531a43d51
