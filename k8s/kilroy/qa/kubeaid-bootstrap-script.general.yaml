@@ -29,7 +29,7 @@ cloud:
       sshKeyPairName: cluster-bootstrapper
 
     bareMetal:
-      wipeDisks: True
+      # wipeDisks: True
       sshKeyPair:
         name: cluster-bootstrapper
         publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub

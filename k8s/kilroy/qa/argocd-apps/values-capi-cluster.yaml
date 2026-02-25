@@ -18,7 +18,7 @@ hetzner:
     imageName: ubuntu-24.04
     sshKeyPairName: cluster-bootstrapper
   bareMetal:
-    wipeDisks: true
+    wipeDisks: false
     sshKeyPair:
       name: cluster-bootstrapper
     installImage:
@@ -56,8 +56,8 @@ hetzner:
               - eui.002538b531a43d50
           - serverID: "2836504"
             wwns:
-              - eui.000000000000000100a07525521833ce
               - eui.000000000000000100a075255218338c
+              - eui.000000000000000100a07525521833ce
         diskLayoutSetupCommands: |
           set -e
 
@@ -87,9 +87,9 @@ hetzner:
           if zpool import -f primary >/dev/null 2>&1; then
             echo "Imported existing primary ZFS pool"
           else
-            # Create the ZFS pool with RAIDZ-1 enabled.
-            zpool create primary raidz1 \
-                  /dev/nvme0n1p5  \ 
+            # Create the ZFS pool with mirroring enabled.
+            zpool create primary mirror \
+                  /dev/nvme0n1p5 \
                   /dev/nvme1n1p5 
 
             # Create the filesystem for ContainerD, to store container images.
