@@ -52,8 +52,8 @@ hetzner:
               - eui.002538bb31c600e5
           - serverID: "2836490"
             wwns:
-              - eui.002538b531a43d50
               - eui.002538b531a43d51
+              - eui.002538b531a43d50
           - serverID: "2836504"
             wwns:
               - eui.000000000000000100a075255218338c
