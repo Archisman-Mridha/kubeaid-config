@@ -1,1 +1,9 @@
 ---
+cilium:
+  kubeProxyReplacement: "true"
+  k8sServiceHost: 95.217.171.251
+  k8sServicePort: 6443
+
+  
+  extraArgs:
+    - "--devices=enp+,eno+"
