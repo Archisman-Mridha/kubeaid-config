@@ -5,6 +5,9 @@ hcloud-csi:
         name: cloud-credentials
         key: hcloud
 
+    nodeSelector:
+      instance.hetzner.cloud/provided-by: cloud
+
     # There might be Hetzner hybrid clusters with control-plane only nodes in HCloud, and all
     # worker nodes in Hetzner bare-metal.
     # In that case, the HCloud CSI controller will be run on the control-plane.
@@ -12,3 +15,7 @@ hcloud-csi:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
         effect: NoSchedule
+
+  node:
+    nodeSelector:
+      instance.hetzner.cloud/provided-by: cloud
