@@ -7,3 +7,6 @@ cilium:
   
   extraArgs:
     - "--devices=eth0,enp+,eno+"
+
+  hostFirewall:
+    enabled: true
