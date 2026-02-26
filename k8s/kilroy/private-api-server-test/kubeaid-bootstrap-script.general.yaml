@@ -1,0 +1,41 @@
+git:
+  privateKeyFilePath: /Users/archismanmridha/.ssh/github
+
+forkURLs:
+  kubeaid:
+    url: git@github.com:Archisman-Mridha/KubeAid.git
+    version: HEAD
+  kubeaidConfig:
+    url: git@github.com:Archisman-Mridha/kubeaid-config.git
+    directory: kilroy/private-api-server-test
+
+cluster:
+  name: private-api-server-test
+  k8sVersion: v1.33.0
+  argoCD:
+    deployKeys:
+      kubeaid:
+        privateKeyFilePath: /Users/archismanmridha/.ssh/github
+      kubeaidConfig:
+        privateKeyFilePath: /Users/archismanmridha/.ssh/github
+
+cloud:
+  hetzner:
+    mode: hcloud
+
+    hcloud:
+      zone: eu-central
+      imageName: ubuntu-24.04
+      sshKeyPairName: cluster-bootstrapper
+
+    controlPlane:
+      regions:
+        - hel1
+
+      hcloud:
+        machineType: cax11
+        replicas: 3
+        loadBalancer:
+          enabled: true
+          region: hel1
+

@@ -1,0 +1,37 @@
+global:
+  clusterName: private-api-server-test
+  kubernetes:
+    version: v1.33.0
+  kubeaid:
+    repo: git@github.com:Archisman-Mridha/KubeAid.git
+  kubeaidConfig:
+    repo: git@github.com:Archisman-Mridha/kubeaid-config.git
+  additionalUsers: 
+    []
+provider:
+  hetzner: true
+
+hetzner:
+  mode: hcloud
+  hcloud:
+    zone: eu-central
+    imageName: ubuntu-24.04
+    sshKeyPairName: cluster-bootstrapper
+
+  controlPlane:
+    regions: 
+      - hel1
+
+    
+    hcloud: 
+      machineType: cax11
+      replicas: 3
+      loadBalancer:
+        enabled: true
+        region: hel1
+
+  nodeGroups:
+    hcloud: 
+      []
+
+    bareMetal:
