@@ -1,0 +1,71 @@
+git:
+  privateKeyFilePath: /Users/archismanmridha/.ssh/github
+
+forkURLs:
+  kubeaid:
+    url: git@github.com:Archisman-Mridha/KubeAid.git
+    version: HEAD
+  kubeaidConfig:
+    url: git@github.com:Archisman-Mridha/kubeaid-config.git
+    directory: kilroy/private-network-poc
+
+cluster:
+  name: private-network-poc
+  type: workload
+  k8sVersion: v1.33.0
+  argoCD:
+    deployKeys:
+      kubeaid:
+        privateKeyFilePath: /Users/archismanmridha/.ssh/github
+      kubeaidConfig:
+        privateKeyFilePath: /Users/archismanmridha/.ssh/github
+
+cloud:
+  hetzner:
+    mode: hybrid
+
+    vswitch:
+      name: private-network-poc
+      vlanID: 4000
+
+    vpnCluster:
+      name: vpn
+
+    hcloud:
+      zone: eu-central
+      imageName: ubuntu-24.04
+      sshKeyPairName: cluster-bootstrapper
+
+    bareMetal:
+      # wipeDisks: True
+      sshKeyPair:
+        name: cluster-bootstrapper
+        publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
+        privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
+
+    controlPlane:
+      regions:
+        - hel1
+
+      hcloud:
+        machineType: cax11
+        replicas: 3
+        loadBalancer:
+          enabled: true
+          region: hel1
+
+    nodeGroups:
+      bareMetal:
+        - name: general
+          labels:
+            node-role.kubernetes.io/general: ""
+            node.cluster.x-k8s.io/nodegroup: general
+          taints: []
+          bareMetalHosts:
+            - serverID: "2836489" # 116.202.170.35
+              privateIP: "10.0.1.2"
+            - serverID: "2836490" # 116.202.170.31
+              privateIP: "10.0.1.3"
+            - serverID: "2836504" # 116.202.170.33
+              privateIP: "10.0.1.4"
+
