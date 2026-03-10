@@ -49,7 +49,7 @@ cloud:
 
       hcloud:
         machineType: cax11
-        replicas: 3
+        replicas: 1
         loadBalancer:
           enabled: true
           region: hel1
@@ -64,8 +64,8 @@ cloud:
           bareMetalHosts:
             - serverID: "2836489" # 116.202.170.35
               privateIP: "10.0.1.2"
-            - serverID: "2836490" # 116.202.170.31
-              privateIP: "10.0.1.3"
+            # - serverID: "2836490" # 116.202.170.31
+            #   privateIP: "10.0.1.3"
             # - serverID: "2836504" # 116.202.170.33
             #   privateIP: "10.0.1.4"
 
