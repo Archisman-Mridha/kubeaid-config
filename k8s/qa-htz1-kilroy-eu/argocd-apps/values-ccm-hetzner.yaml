@@ -1,8 +1,5 @@
 ---
 ccm-hetzner:
-  secret:
-    name: cloud-credentials
-
   env:
     loadBalancers: "true"
 
@@ -19,8 +16,6 @@ ccm-hetzner:
     # default.
     - name: HCLOUD_LOAD_BALANCERS_USE_PRIVATE_IP
       value: "true"
+
   privateNetwork:
     enabled: true
-
-  nodeSelector:
-    instance.hetzner.cloud/provided-by: cloud
