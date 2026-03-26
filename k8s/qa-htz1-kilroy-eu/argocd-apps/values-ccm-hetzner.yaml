@@ -16,6 +16,5 @@ ccm-hetzner:
     # default.
     - name: HCLOUD_LOAD_BALANCERS_USE_PRIVATE_IP
       value: "true"
-
   privateNetwork:
     enabled: true
