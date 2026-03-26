@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: kubeaid
   sources:
-    - repoURL: git@github.com:Archisman-Mridha/KubeAid.git
+    - repoURL: git@github.com:Obmondo/KubeAid.git
       path: argocd-helm-charts/ccm-hetzner
       targetRevision: HEAD
       helm:

@@ -3,7 +3,7 @@ git:
 
 forkURLs:
   kubeaid:
-    url: git@github.com:Archisman-Mridha/KubeAid.git
+    url: git@github.com:Obmondo/KubeAid.git
     version: HEAD
   kubeaidConfig:
     # url: git@github.com:TheKilroyGroup/k8id-config.git
