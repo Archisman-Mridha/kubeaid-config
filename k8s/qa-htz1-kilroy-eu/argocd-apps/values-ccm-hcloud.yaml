@@ -14,13 +14,16 @@ hcloud-cloud-controller-manager:
     # default.
     HCLOUD_LOAD_BALANCERS_USE_PRIVATE_IP:
       value: "true"
-
-  networking:
-    enabled: true
-    network:
+    ROBOT_USER:
       valueFrom:
         secretKeyRef:
           name: cloud-credentials
+    ROBOT_PASSWORD:
+      valueFrom:
+        secretKeyRef:
+          name: cloud-credentials
+  robot:
+    enabled: true
 
   nodeSelector:
     instance.hetzner.cloud/provided-by: cloud
