@@ -1,0 +1,186 @@
+global:
+  clusterName: qa-htz1-kilroy-eu
+  kubernetes:
+    version: v1.33.0
+  kubeaid:
+    repo: git@github.com:Archisman-Mridha/KubeAid.git
+  kubeaidConfig:
+    repo: git@github.com:Archisman-Mridha/kubeaid-config.git
+  additionalUsers: 
+    []
+provider:
+  hetzner: true
+
+hetzner:
+  mode: hybrid
+
+  sshKeyPair:
+    name: cluster-bootstrapper
+  hcloud: 
+    zone: eu-central
+    imageName: ubuntu-24.04
+    hetznerNetwork:
+      cidr: 10.0.0.0/16
+      hcloudServersSubnetCIDR: 10.0.0.0/24
+  bareMetal:
+    wipeDisks: false
+    installImage:
+      imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
+      vg0:
+        size: 80G
+        rootVolumeSize: 50G
+    vSwitch:
+      vlanID: 4000
+
+  controlPlane:
+    regions: 
+      - hel1
+
+    
+    endpoint:
+      host: 10.0.0.6
+
+    
+    hcloud: 
+      machineType: cax11
+      replicas: 1
+      loadBalancer:
+        enabled: true
+        region: hel1
+
+  nodeGroups: 
+    hcloud: []
+    bareMetal:
+      - name: general
+        labels:
+          node-role.kubernetes.io/general: ""
+          node.cluster.x-k8s.io/nodegroup: general
+        taints: []
+        bareMetalHosts:
+          - serverID: "2836489"
+            privateIP: 10.0.1.2
+            wwns:
+              - eui.002538bb31c60104
+              - eui.002538bb31c600e5
+          - serverID: "2836490"
+            privateIP: 10.0.1.3
+            wwns:
+              - eui.002538b531a43d51
+              - eui.002538b531a43d50
+          - serverID: "2836504"
+            privateIP: 10.0.1.4
+            wwns:
+              - eui.000000000000000100a075255218338c
+              - eui.000000000000000100a07525521833ce
+        zfs:
+          size: 220
+        storageplan:
+          serverid: "2836489"
+          disks:
+            - name: nvme0n1
+              wwn: eui.002538bb31c60104
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+            - name: nvme1n1
+              wwn: eui.002538bb31c600e5
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+          os:
+            - name: nvme0n1
+              wwn: eui.002538bb31c60104
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+            - name: nvme1n1
+              wwn: eui.002538bb31c600e5
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+          zfs:
+            - name: nvme0n1
+              wwn: eui.002538bb31c60104
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+            - name: nvme1n1
+              wwn: eui.002538bb31c600e5
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+          ceph:
+            - name: nvme0n1
+              wwn: eui.002538bb31c60104
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
+            - name: nvme1n1
+              wwn: eui.002538bb31c600e5
+              type: NVMe
+              partitiontabletype: gpt
+              size: 951
+              withhighspeednic: false
+              priorityscores:
+                os: 1
+                zfs: 5
+              allocations:
+                os: 50
+                zfs: 220
+                ceph: 681
