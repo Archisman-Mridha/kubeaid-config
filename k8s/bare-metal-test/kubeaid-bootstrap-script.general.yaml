@@ -32,3 +32,6 @@ cloud:
       hosts:
         - publicAddress: "135.181.148.158"
 
+kubePrometheus:
+  version: v0.15.0
+
