@@ -6,7 +6,6 @@ forkURLs:
     url: git@github.com:Obmondo/KubeAid.git
     version: HEAD
   kubeaidConfig:
-    # url: git@github.com:TheKilroyGroup/k8id-config.git
     url: git@github.com:Archisman-Mridha/kubeaid-config.git
 
 cluster:
@@ -71,4 +70,7 @@ cloud:
               privateIP: "10.0.1.3"
             - serverID: "2836504" # 116.202.170.33
               privateIP: "10.0.1.4"
+
+kubePrometheus:
+  version: v0.15.0
 
