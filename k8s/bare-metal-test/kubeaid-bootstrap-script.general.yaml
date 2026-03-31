@@ -1,6 +1,5 @@
 git:
   privateKeyFilePath: /Users/archismanmridha/.ssh/github
-  # useSSHAgentAuth: true
 
 forkURLs:
   kubeaid:
@@ -12,19 +11,24 @@ forkURLs:
 
 cluster:
   name: bare-metal-test
-  k8sVersion: v1.33.0
+  k8sVersion: v1.34.0
+
+  argoCD:
+    deployKeys:
+      kubeaid:
+        privateKeyFilePath: /Users/archismanmridha/.ssh/github
+      kubeaidConfig:
+        privateKeyFilePath: /Users/archismanmridha/.ssh/github
 
 cloud:
   bare-metal:
     ssh:
-      port: 22
-      privateKey:
-        privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
+      privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
 
     controlPlane:
       endpoint:
-        host: "46.62.232.53"
+        host: "135.181.148.158"
         port: 6443
       hosts:
-        - publicAddress: "46.62.232.53"
+        - publicAddress: "135.181.148.158"
 

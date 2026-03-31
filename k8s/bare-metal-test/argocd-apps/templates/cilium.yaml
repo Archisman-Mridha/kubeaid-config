@@ -13,13 +13,13 @@ spec:
     server: https://kubernetes.default.svc
   project: kubeaid
   sources:
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid.git
+    - repoURL: git@github.com:Archisman-Mridha/kubeaid.git
       path: argocd-helm-charts/cilium
       targetRevision: 21.0.0
       helm:
         valueFiles:
           - $values/k8s/bare-metal-test/argocd-apps/values-cilium.yaml
-    - repoURL: https://github.com/Archisman-Mridha/kubeaid-config.git
+    - repoURL: git@github.com:Archisman-Mridha/kubeaid-config.git
       targetRevision: HEAD
       ref: values
   syncPolicy:

@@ -16,7 +16,7 @@ spec:
   project: kubeaid
   source:
     path: k8s/bare-metal-test/argocd-apps
-    repoURL: https://github.com/Archisman-Mridha/kubeaid-config.git
+    repoURL: git@github.com:Archisman-Mridha/kubeaid-config.git
     targetRevision: HEAD
   syncPolicy:
     syncOptions:
