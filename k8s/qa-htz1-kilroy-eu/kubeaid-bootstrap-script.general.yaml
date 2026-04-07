@@ -3,7 +3,7 @@ git:
 
 forkURLs:
   kubeaid:
-    url: git@github.com:Archisman-Mridha/KubeAid.git
+    url: git@github.com:Obmondo/KubeAid.git
     version: HEAD
   kubeaidConfig:
     url: git@github.com:Archisman-Mridha/kubeaid-config.git
@@ -51,7 +51,7 @@ cloud:
 
       hcloud:
         machineType: cax11
-        replicas: 1
+        replicas: 3
         loadBalancer:
           enabled: true
           region: hel1

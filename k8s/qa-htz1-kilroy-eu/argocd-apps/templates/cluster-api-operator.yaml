@@ -15,7 +15,7 @@ spec:
     namespace: capi-cluster
   project: kubeaid
   sources:
-    - repoURL: git@github.com:Archisman-Mridha/KubeAid.git
+    - repoURL: git@github.com:Obmondo/KubeAid.git
       path: argocd-helm-charts/cluster-api-operator
       targetRevision: 16.0.1
       helm:
