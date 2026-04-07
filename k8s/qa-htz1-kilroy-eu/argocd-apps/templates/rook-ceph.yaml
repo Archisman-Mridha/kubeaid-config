@@ -15,7 +15,7 @@ spec:
     namespace: rook-ceph
   project: kubeaid
   sources:
-    - repoURL: git@github.com:Obmondo/KubeAid.git
+    - repoURL: git@github.com:Archisman-Mridha/KubeAid.git
       path: argocd-helm-charts/rook-ceph
       targetRevision: HEAD
       helm:

@@ -3,7 +3,7 @@ git:
 
 forkURLs:
   kubeaid:
-    url: git@github.com:Obmondo/KubeAid.git
+    url: git@github.com:Archisman-Mridha/KubeAid.git
     version: HEAD
   kubeaidConfig:
     url: git@github.com:Archisman-Mridha/kubeaid-config.git
@@ -51,7 +51,7 @@ cloud:
 
       hcloud:
         machineType: cax11
-        replicas: 3
+        replicas: 1
         loadBalancer:
           enabled: true
           region: hel1
@@ -68,9 +68,9 @@ cloud:
               privateIP: "10.0.1.2"
             - serverID: "2836490" # 116.202.170.31
               privateIP: "10.0.1.3"
-            - serverID: "2836504" # 116.202.170.33
-              privateIP: "10.0.1.4"
+            # - serverID: "2836504" # 116.202.170.33
+            #   privateIP: "10.0.1.4"
 
 kubePrometheus:
-  version: v0.15.0
+  version: v0.16.0
 
